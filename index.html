@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width" name="viewport">
+    <title>animat.io - A Modern CSS Animations / Effects Library</title>
+    <link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Arvo:400,700">
+    <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+  </head>
+  <body>
+
+    <header id="header">
+      <div class="container">
+        <h1>animat.<span class="alt">io</span></h1>
+        <ul class="pull-right" id="nav">
+          <li class="active">
+            <a href="#getting-started">
+              Getting Started
+            </a>
+          </li>
+          <li>
+            <a href="#effects">Using Animations</a>
+          </li>
+          <li>
+            <a href="#effects">Using Transforms</a>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </header>
+
+    <div id="content">
+      <section id="splash-wrapper">
+        <div id="splash">
+          <h1>animat.<span class="alt">io</span></h1>
+          <h2>A Modern CSS Animations / Effects Library</h2>
+        </div>
+      </section>
+
+      <hr class="mtn">
+
+      <div class="container">
+        <section id="getting-started">
+          <h2>Getting Started</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Usage</h5>
+              <p>
+                You can apply any animation by just by calling <code>.animation</code> method
+                and defining the animation type to any element.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <pre class="prettyprint linenums lang-js js">
+&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animation.animatio(selector).animate('fadeIn');&#x000A;&#x000A;&lt;/script&gt;
+              </pre>
+            </div>
+          </div>
+          <div class="row mt20">
+            <div class="col-md-6" id="basic">
+              <h5>Configure</h5>
+              <p>Effects are completely customizable. Default configuration settings:</p>
+              <ul class="unstyled">
+                <li>
+                  <code>duration</code> Default: '1s'
+                </li>
+                <li>
+                  <code>timing</code> Default: 'ease'
+                </li>
+                <li>
+                  <code>iterationCount</code> Default: 1
+                </li>
+                <li>
+                  <code>direction</code> Default: 'normal'
+                </li>
+                <li>
+                  <code>delay</code> Default: '0s'
+                </li>
+                <li>
+                  <code>fillMode</code> Default: 'forwards'
+                </li>
+              </ul>
+
+              You can read more about each configurable property here - <a href="http://www.w3.org/TR/css3-animations/#timing-functions">Official W3C Document</a>.
+            </div>
+            <div class="col-md-6">
+              <pre class="prettyprint linenums">
+&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('pulse', {&#x000A;    delay: '1s',&#x000A;    duration: '2s',&#x000A;    iterationCount: 'infinite'&#x000A;  });&#x000A;&#x000A;&lt;/script&gt;
+              </pre>
+            </div>
+          </div>
+          <div class="row mt20">
+            <div class="col-md-6">
+              <h5>Callback</h5>
+              <p>
+                You can add an optional third parameter to define a callback function that will be executed when the animation ends.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <pre class="prettyprint linenums">
+&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('fadeIn', function(){&#x000A;    animatio(this).animate('fadeOut');&#x000A;  });&#x000A;&#x000A;&lt;/script&gt;
+              </pre>
+            </div>
+          </div>
+          <div class="row mt20">
+            <div class="col-md-6">
+              <h5>Customize</h5>
+              <p>
+                There are predefined animations that are ready to use (listed <a href='#effects'>below</a>).
+                However, you can also create your own animation by setting it as a string in
+                <code>config.rule</code>.
+              </p>
+              <p>
+                <small>
+                  <b>{browser}</b> is a place-holder that we will be updated with the correct browser prefix once
+                  the rule has been appended to the document head.
+                </small>
+              </p>
+            </div>
+            <div class="col-md-6">
+              <pre class="prettyprint linenums">
+&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('moveLeft', {&#x000A;    rule: "0% { {browser}transform: translateX(0);}, 100% { {browser}transform: translateX(100);}"&#x000A;  });&#x000A;&#x000A;&lt;/script&gt;
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        <hr>
+
+        <section id="effects">
+          <h2>Using Animations</h2>
+
+          <h5 class="mt40">Predefined Animations</h5>
+          <p>Below you'll find effect that can be used out-of-the-box.</p>
+
+          <div class="row mt40">
+            <div class="col-md-4">
+              <h5>Bounce</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="col-md-12">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="bounceIn">bounceIn</button>
+                  <button class="btn block" data-effect="bounceInUp">bounceInUp</button>
+                  <button class="btn block" data-effect="bounceInDown">bounceInDown</button>
+                  <button class="btn block" data-effect="bounceInLeft">bounceInLeft</button>
+                  <button class="btn block" data-effect="bounceInRight">bounceInRight</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="bounceOut">bounceOut</button>
+                  <button class="btn block" data-effect="bounceOutUp">bounceOutUp</button>
+                  <button class="btn block" data-effect="bounceOutDown">bounceOutDown</button>
+                  <button class="btn block" data-effect="bounceOutLeft">bounceOutLeft</button>
+                  <button class="btn block" data-effect="bounceOutRight">bounceOutRight</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Fade In</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="fadeIn">fadeIn</button>
+                  <button class="btn block" data-effect="fadeInUp">fadeInUp</button>
+                  <button class="btn block" data-effect="fadeInDown">fadeInDown</button>
+                  <button class="btn block" data-effect="fadeInLeft">fadeInLeft</button>
+                  <button class="btn block" data-effect="fadeInRight">fadeInRight</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="fadeOut">fadeOut</button>
+                  <button class="btn block" data-effect="fadeOutUp">fadeOutUp</button>
+                  <button class="btn block" data-effect="fadeOutDown">fadeOutDown</button>
+                  <button class="btn block" data-effect="fadeOutLeft">fadeOutLeft</button>
+                  <button class="btn block" data-effect="fadeOutRight">fadeOutRight</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Fade Out</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="fadeInUpBig">fadeInUpBig</button>
+                  <button class="btn block" data-effect="fadeInDownBig">fadeInDownBig</button>
+                  <button class="btn block" data-effect="fadeInLeftBig">fadeInLeftBig</button>
+                  <button class="btn block" data-effect="fadeInRightBig">fadeInRightBig</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="fadeOutUpBig">fadeOutUpBig</button>
+                  <button class="btn block" data-effect="fadeOutDownBig">fadeOutDownBig</button>
+                  <button class="btn block" data-effect="fadeOutLeftBig">fadeOutLeftBig</button>
+                  <button class="btn block" data-effect="fadeOutRightBig">fadeOutRightBig</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt40">
+            <div class="col-md-4">
+              <h5>Flip</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="flipIn">flipIn</button>
+                  <button class="btn block" data-effect="flipInX">flipInX</button>
+                  <button class="btn block" data-effect="flipInY">flipInY</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="flipOut">flipOut</button>
+                  <button class="btn block" data-effect="flipOutX">flipOutX</button>
+                  <button class="btn block" data-effect="flipOutY">flipOutY</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Miscellaneous</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="flash">flash</button>
+                  <button class="btn block" data-effect="shake">shake</button>
+                  <button class="btn block" data-effect="bounce">bounce</button>
+                  <button class="btn block" data-effect="tada">tada</button>
+                  <button class="btn block" data-effect="swing">swing</button>
+                  <button class="btn block" data-effect="wobble">wobble</button>
+                  <button class="btn block" data-effect="pulse">pulse</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="hinge">hinge</button>
+                  <button class="btn block" data-effect="rollIn">rollIn</button>
+                  <button class="btn block" data-effect="rollOut">rollOut</button>
+                  <button class="btn block" data-effect="lightSpeedIn">lightSpeedIn</button>
+                  <button class="btn block" data-effect="lightSpeedOut">lightSpeedOut</button>
+                  <button class="btn block" data-effect="wiggle">wiggle</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Rotate</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="rotateIn">rotateIn</button>
+                  <button class="btn block" data-effect="rotateInUpLeft">rotateInUpLeft</button>
+                  <button class="btn block" data-effect="rotateInDownLeft">rotateInDownLeft</button>
+                  <button class="btn block" data-effect="rotateInUpRight">rotateInUpRight</button>
+                  <button class="btn block" data-effect="rotateInDownRight">rotateInDownRight</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="rotateOut">rotateOut</button>
+                  <button class="btn block" data-effect="rotateOutUpLeft">rotateOutUpLeft</button>
+                  <button class="btn block" data-effect="rotateOutDownLeft">rotateOutDownLeft</button>
+                  <button class="btn block" data-effect="rotateOutUpRight">rotateOutUpRight</button>
+                  <button class="btn block" data-effect="rotateOutDownRight">rotateOutDownRight</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt40">
+            <div class="col-md-4">
+              <h5>Slide</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="slideInLeft">slideInLeft</button>
+                  <button class="btn block" data-effect="slideInRight">slideInRight</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="slideOutLeft">slideOutLeft</button>
+                  <button class="btn block" data-effect="slideOutRight">slideOutRight</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Zoom</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="zoomIn">zoomIn</button>
+                  <button class="btn block" data-effect="zoomInCurved">zoomInCurved</button>
+                  <button class="btn block" data-effect="zoomInFlip">zoomInFlip</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="zoomOut">zoomOut</button>
+                  <button class="btn block" data-effect="zoomOutCurved">zoomOutCurved</button>
+                  <button class="btn block" data-effect="zoomOutFlip">zoomOutFlip</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Perspective</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="perspectiveDown">perspectiveDown</button>
+                  <button class="btn block" data-effect="perspectiveLeft">perspectiveLeft</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="perspectiveUp">perspectiveUp</button>
+                  <button class="btn block" data-effect="perspectiveRight">perspectiveRight</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt40">
+            <div class="col-md-4">
+              <h5>Open</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="openDownLeft">openDownLeft</button>
+                  <button class="btn block" data-effect="openDownRight">openDownRight</button>
+                  <button class="btn block" data-effect="openDownLeftRetourn">openDownLeftRetourn</button>
+                  <button class="btn block" data-effect="openUpLeftRetourn">openUpLeftRetourn</button>
+                  <button class="btn block" data-effect="openDownLeftOut">openDownLeftOut</button>
+                  <button class="btn block" data-effect="openUpLeftOut">openUpLeftOut</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="openUpLeft">openUpLeft</button>
+                  <button class="btn block" data-effect="openUpRight">openUpRight</button>
+                  <button class="btn block" data-effect="openDownRightRetourn">openDownRightRetourn</button>
+                  <button class="btn block" data-effect="openUpRightRetourn">openUpRightRetourn</button>
+                  <button class="btn block" data-effect="openDownRightOut">openDownRightOut</button>
+                  <button class="btn block" data-effect="openUpRightOut">openUpRightOut</button>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="transitions">
+          <div class="container">
+            <hr>
+            <div class="transform-container">
+              <div id="animate_me">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <h2>Transforms</h2>
+            <div class="row">
+              <div class="col-md-6">
+                <button id="animate_box" class="btn">Click for magic</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <br><br><br><br><br><br>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/animations.js"></script>
+    <script type="text/javascript" src="js/animate.js"></script>
+    <script type="text/javascript" src="js/transform.js"></script>
+
+    <script type="text/javascript">
+      animatio(function(){
+        var buttons = animatio('.btn').each(function(){
+          this.addEventListener('click', function(){
+
+            var img = animatio(this.parentNode.parentNode.parentNode.querySelector('.html-badge')),
+                animation = animatio(this).data('effect');
+
+            img.animate(animation, function(){
+              animatio(this).animate('reset');
+            });
+          });
+        });
+
+        document.getElementById('animate_box').addEventListener('click', function(){
+          animatio('#animate_me').animate('lightSpeedIn', { fillMode: 'fowards' }, function(){
+            animatio(this).animate('lightSpeedOut', { fillMode: 'fowards' }, function(){
+              animatio(this).animate('flipInX', { fillMode: 'fowards' }, function(){
+                //console.log(animatio('#animate_me').offset());
+                //not relative
+                animatio('#animate_me').animate('swing').transform({ left: '20%', top: 60, opacity: 1, width: 500, height: 200 }, 1000, function(){
+                  //relative string
+                  animatio('#animate_me').animate('flipInX').transform({ left: '-=100', top: '+=60', opacity: 1, width: '+=500', height: 200 }, 1000, function(){
+                    //relative stringify
+                    animatio('#animate_me').animate('swing').transform({ left: '-=' + 100, top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 200 }, 1000, function(){
+                      //animatio('#animate_me').transform({ left: '50%', top: '20%', borderRadius: '10px', width: '50%', height: 100, delay: 500 }, 1000, function(){
+                      // console.log('fired 2');
+                        //console.log(animatio('#animate_me').offset(), animatio('#animate_me').offset().width);
+
+                      animatio('#animate_me').transform({ left: '50%', top: '+=' + 60, borderRadius: '4px', width: '-=' + 800, height: 80}, 1000, function(){
+                      //   console.log('fired 3');
+                      //   animatio(this).animate('flipOutX', function(){
+                      //     animatio(this).animate('flipInY', function(){
+                      //       animatio('#animate_me').transform({ left: '-=100', top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 500 }, 1000, function(){
+                      //         console.log('fired 4');
+                      //         animatio('#animate_me').transform({ left: '50', borderRadius: '2px', top: 40, width: '50%', height: 100}, 1500, function(){
+                      //           console.log('fired 5');
+                      //           animatio('#animate_me').transform({ left: '50%', top: '50%', width: 50, height: 50, borderRadius: 0, opacity: 1 }, 1500, function(){
+                      //             console.log('fired 6');
+                      //           });
+                      //         });
+                      //       });
+                      //     });
+                      //   })
+                        //console.log(animatio('#animate_me').offset(), animatio('#animate_me').offset().width);
+                        animatio('#animate_me').transform({ borderRadius: 0, width: 50, height: 50 }, 1000, function(){
+
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+
+        });
+      });
+    </script>
+  </body>
+</html>
