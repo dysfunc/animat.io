@@ -162,19 +162,20 @@
         if(type === prev){
           element.css(prefix + 'animation', 'none');
         }
+        setTimeout(function(){
+          css[prefix + 'animation-name']            = animation;
+          css[prefix + 'animation-delay']           = runtime(config.delay, '0s');
+          css[prefix + 'animation-direction']       = config.direction;
+          css[prefix + 'animation-duration']        = runtime(config.duration, '1s');
+          css[prefix + 'animation-fill-mode']       = config.fillMode;
+          css[prefix + 'animation-iteration-count'] = config.iterationCount;
+          css[prefix + 'animation-play-state']      = config.playState || 'running';
+          css[prefix + 'animation-timing-function'] = config.timingFunction;
+          css[prefix + 'transform']                 = 'translateZ(0)';
 
-        css[prefix + 'animation-name']            = animation;
-        css[prefix + 'animation-delay']           = runtime(config.delay, '0s');
-        css[prefix + 'animation-direction']       = config.direction;
-        css[prefix + 'animation-duration']        = runtime(config.duration, '1s');
-        css[prefix + 'animation-fill-mode']       = config.fillMode;
-        css[prefix + 'animation-iteration-count'] = config.iterationCount;
-        css[prefix + 'animation-play-state']      = config.playState || 'running';
-        css[prefix + 'animation-timing-function'] = config.timingFunction;
-        css[prefix + 'transform']                 = 'translateZ(0)';
-
-        // apply styling to element
-        element.css(css) && (css = null);
+          // apply styling to element
+          element.css(css) && (css = null);
+        }, 0);
       }
 
       return target;
