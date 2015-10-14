@@ -365,6 +365,25 @@
         });
       },
       /**
+       * Determines if the passed obj is an array or array-like object (NodeList, Arguments, String, etc...)
+       * @param  {Object}  obj Object to type check
+       * @return {Boolean}     The true/false result
+       */
+      isArrayLike: function(obj){
+        var type = a.type(obj),
+            length = obj.length;
+
+        if(type === 'function' || a.isWindow(obj)){
+          return false;
+        }
+
+        if(obj.nodeType === 1 && length){
+          return true;
+        }
+
+        return type === 'array' || length === 0 || typeof(length) === 'number' && length > 0 && (length - 1) in obj;
+      },
+      /**
        * Determines whether the passed object is a number
        * @param  {Object}  obj Object to type check
        * @return {Boolean}     The true/false result
@@ -395,6 +414,39 @@
        */
       isWindow: function(obj){
         return obj !== null && obj === obj.window;
+      },
+      /**
+       * Returns a new array from the results of each element in the collection
+       * @param  {Array}    elements Collection to map
+       * @param  {Function} fn       The function to execute on each item in the collection
+       * @return {Array}             Returns the new mapped array
+       */
+      map: function(elements, fn){
+        var k = elements.length,
+            key,
+            value,
+            values = [],
+            i = 0;
+
+        if(a.isArrayLike(elements)){
+          for(; i < k; i++){
+            value = fn(elements[i], i);
+
+            if(value == null){
+              values.push(value);
+            }
+          }
+        }else{
+          for(key in elements){
+            value = fn(elements[key], key);
+
+            if(value == null){
+              values.push(value);
+            }
+          }
+        }
+
+        return concat.apply([], values);
       },
       /**
        * Determine whether or not a DOM element matches a given selector
@@ -631,6 +683,24 @@
         );
       },
       /**
+       * Search descendants of an element and returns the matched ones
+       * @param  {String} selector The CSS selector to filter on
+       * @return {Object}          The matched set of elements
+       */
+      find: function(selector){
+        var search;
+
+        if(this.length === 1){
+          search = a(selector, this[0]);
+        }else{
+          search = a.map(this, function(node){
+            return a(selector, node);
+          });
+        }
+
+        return this.chain(search);
+      },
+      /**
        * Determines whether an element has a specific CSS class
        * @param  {String}  cls String containgin the CSS class name to check for
        * @return {Boolean}     The true/false result of the check
@@ -658,6 +728,16 @@
           top: element.top + global.pageYOffset,
           width: element.width
         };
+      },
+      /**
+       * Returns a new animatio object containing the matched elements
+       * @param  {Function} fn A function executed for each element in the current set
+       * @return {Object}      The wrapped collection of matched elements
+       */
+      map: function(fn){
+        return a(a.map(this, function(element, index){
+          return fn.call(element, index, element);
+        }));
       },
       /**
        * Return the parent element of the first matched element
