@@ -1,5 +1,5 @@
 (function(window, a){
-  // CSS transition reset object
+  // map of CSS properties during transform for reset
   var reset = {};
   /**
    * Perform a custom animation of a set of CSS properties
@@ -89,7 +89,6 @@
 
       var $t = this,
           css = {},
-          cache = {},
           cssTransforms = [],
           cssTransitions = [],
           timeout = this.wait(duration, delay),
@@ -102,6 +101,7 @@
               element.off('transitionend', transitionEnd);
             }
           };
+
 
       for(property in config){
         // check for valid property

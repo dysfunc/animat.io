@@ -994,7 +994,7 @@
        * @param {String}      events      The event to bind to
        * @param {Function}    fn          The function to execute on the event
        * @param {Anything}    data        Data passed to the event handler
-       * @param {Boolean}     capture     The flag to determine if we capture the event or not
+       * @param {Boolean}     capture     If ture, the event will be captured
        */
       on: function(element, events, data, fn, capture){
         var unique = element.uid || (element.uid = uid++),
@@ -1058,6 +1058,11 @@
       cssTransitionEnd   : supports('TransitionEnd') in documentElement.style,
       cssTransition      : supports('Transition') in documentElement.style,
       cssTransform3d     : ('WebKitCSSMatrix' in global) && ('m11' in new WebKitCSSMatrix()),
+      homescreen         : ('standalone' in navigator),
+      localStorage       : typeof(global.localStorage) !== undefined,
+      pushState          : ('pushState' in global.history) && ('replaceState' in global.history),
+      retina             : ('devicePixelRatio' in global) && global.devicePixelRatio > 1,
+      touch              : ('ontouchstart' in global)
     };
 
     a.emptyFn = function(){};
