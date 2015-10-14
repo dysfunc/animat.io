@@ -344,10 +344,14 @@
               <div class="col-md-6">
                 <button id="animate_box" class="btn">Click for magic</button>
               </div>
+              <div class="col-md-6">
+                <button id="growl" class="btn">Growl Notifications</button>
+              </div>
+
             </div>
           </div>
+          <div id="notification">OMG! Awesome</div>
         </section>
-
         <br><br><br><br><br><br>
       </div>
     </div>
@@ -367,6 +371,16 @@
 
             img.animate(animation, function(){
               animatio(this).animate('reset');
+            });
+          });
+        });
+
+        document.getElementById('growl').addEventListener('click', function(){
+          $('#notification').animate('fadeInUpBig', function(){
+            this.style.opacity = 1;
+
+            $(this).animate('fadeOutUpBig', {
+              delay: '1s'
             });
           });
         });

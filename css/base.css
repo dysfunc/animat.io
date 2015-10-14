@@ -134,6 +134,7 @@ hr {
 
 section {
   padding-top: 10px;
+  position: relative;
 }
 
 #header {
@@ -376,4 +377,16 @@ code {
   bottom: -4px;
   right: -4px;
   top: auto;
+}
+
+#notification {
+  background: rgba(0,0,0,.4);
+  border-radius: 3px;
+  opacity: 0;
+  padding: 20px;
+  position: absolute;
+  right: 20px;
+  text-align: center;
+  top: 0;
+  width: 150px;
 }

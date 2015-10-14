@@ -113,9 +113,13 @@
         style.textContent += ('\n' + cache[name]);
       }
 
-      return name;
+      return {
+        name: name,
+        rule: cache[name]
+      }
     },
     /**
+     *
      * Apply a given animation to one or more elements in a matched set
      * @param  {String}       type   The type of animation
      * @param  {Object}       config The animation configuration
@@ -129,13 +133,16 @@
           animation = null,
           prev = element.css(prefix + 'animation-name'),
           css = {},
+          willChange = [],
           animationEnd = function(e){
             if(!config.bubbles){
               e.stopPropagation();
             }
-
+            // pause animation
             element.css(prefix + 'animation-play-state', 'paused');
-
+            // strip will change properties
+            element[0].style.willChange = '';
+            // trigger callback if defined
             if(typeof(fn) === 'function'){
               // fire callback
               fn.call(this);
@@ -158,12 +165,30 @@
         config = config || {};
         animation = this.rule(type, config);
 
+        var parse = animation.rule.split(/[{};:]/).filter(String).map(function(str){
+            return str.trim();
+        });
+
+        animatio.each(parse, function(index, property){
+          // strip prefix from property
+          property = property.replace(animatio.pattern.prefixes, '');
+          // check if property is a valid will-change property
+          if(animatio.pattern.cssProperties.test(property)){
+            // add property to will-change array for performance
+            if(willChange.indexOf(RegExp.$1) === -1){
+              willChange.push(RegExp.$1);
+            }
+          }
+        });
+        // set will-change properties on element
+        element[0].style.willChange = willChange.join(', ');
         // reset animation state for reuse
         if(type === prev){
           element.css(prefix + 'animation', 'none');
         }
+        // trigger a redraw
         setTimeout(function(){
-          css[prefix + 'animation-name']            = animation;
+          css[prefix + 'animation-name']            = animation.name;
           css[prefix + 'animation-delay']           = runtime(config.delay, '0s');
           css[prefix + 'animation-direction']       = config.direction;
           css[prefix + 'animation-duration']        = runtime(config.duration, '1s');

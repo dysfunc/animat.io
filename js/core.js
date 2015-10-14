@@ -76,7 +76,7 @@
 
     a.fn = a.prototype = {
       constructor: a,
-      version: '1.0.0',
+      version: '2.0.0',
       init: function(selector, context){
 
         if(!selector){
@@ -837,12 +837,14 @@
       browser       : /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i,
       camel         : /-([\da-z])/gi,
       cssNumbers    : /^((margin|padding|border)(top|right|bottom|left)(width|height)?|height|width|zindex?)$/i,
+      cssProperties : /^((background|margin|padding|border)(color|size|position|top|right|bottom|left)(width|height)?|opacity|color|height|transform|width?)$/i,
       device        : /\b((ip)(hone|ad|od)|playbook|hp-tablet)\b/i,
       duration      : /[\d\.]*m?s/,
       ios           : /\b((ip)(hone|ad|od))\b/i,
       escape        : /('|\\)/g,
       nodes         : /^(?:1|3|8|9|11)$/,
       numbers       : /^(0|[1-9][0-9]*)$/i,
+      prefixes      : /^-webkit-|-moz-|-o-|ms-/gi,
       properties    : /^(property|delay|duration)$/i,
       relative      : /^(?:(-|\+)(?:=))/,
       ready         : /^(?:complete|loaded|interactive)$/i,
