@@ -171,8 +171,6 @@
           css[prefix + 'animation-iteration-count'] = config.iterationCount;
           css[prefix + 'animation-play-state']      = config.playState || 'running';
           css[prefix + 'animation-timing-function'] = config.timingFunction;
-          css[prefix + 'transform']                 = 'translateZ(0)';
-
           // apply styling to element
           element.css(css) && (css = null);
         }, 0);
