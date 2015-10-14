@@ -1,185 +1,176 @@
-(function(window, animatio){
-  'use strict';
-
-  // CSS cache object
-  var cache = {},
-      // CSS transition reset object
-      reset = {},
-      // reference to inline style block
-      style = null,
-      /**
-       * Determines if we've already created our inline style block to store our animation rules in
-       * @return {Boolean} Always returns the value of true
-       */
-      createStyle = function(){
-        if(!style){
-          style = document.createElement('style');
-          style.setAttribute('type', 'text/css');
-          document.getElementsByTagName('head')[0].appendChild(style);
-        }
-
-        return true;
-      },
-      /**
-       * Returns the duration for the animation effect
-       * @param  {Mixed}  duration The number or string containing the duration of the animation
-       * @return {String} returns  The duration in string format
-       */
-      runtime = function(duration, defaut){
-        if(duration){
-          if(typeof(duration) === 'number'){
-            return duration + 'ms';
-          }
-
-          if(typeof(duration) === 'string'){
-            return (duration.match(/[\d\.]*m?s/)[0] || defaut);
-          }
-        }
-
-        return defaut;
-      },
-      wait = function(duration, delay){
-        var map = { ms: 1, s: 1000 },
-            calc;
-
-        calc = function(time){
-          var match = time.match(/(\d+)(ms|s)/);
-          return parseFloat(RegExp.$1) * map[RegExp.$2 || 's'];
-        };
-
-        return calc(duration) + calc(delay);
-      };
-
+(function(window, a){
+  // CSS transition reset object
+  var reset = {};
   /**
-   * Animates an object (or a group of them) using CSS3
-   * @param {String}   name   The name of animation to apply
-   * @param {Mixed}    config The animation configuration
-   * @param {Function} fn     The animation completion callback (optional)
+   * Perform a custom animation of a set of CSS properties
+   * @param  {Object}   config   The key + value pairs of properties to animate
+   * @param  {Mixed}    duration The string or number in milliseconds or seconds
+   * @param  {Function} fn       The callback method to execute on animation end (optional)
    */
-  animatio.fn.animate = function(name, config, fn){
+  a.fn.transform = function(config, duration, fn){
+    config = a.extend(true, {
+      duration: '500ms'
+    }, config, a(this).data());
 
-    if(animatio.isFunction(config)){
-      fn = config;
-      config = {};
+    if(a.isFunction(duration)){
+      fn = duration;
+      duration = config.duration;
     }
 
-    config = animatio.extend(true, {
-      bubbles: false,
-      delay: '0s',
-      direction: 'normal',
-      duration: '1s',
-      fillMode: 'forwards',
-      iterationCount: '1',
-      rule: null,
-      timingFunction: 'ease'
-    }, config || {});
-
     return this.each(function(){
-      return new animate(name, config, this, fn);
+      return new transform(this, config, duration, fn);
     });
   };
 
-  var animate = function(type, config, target, fn){
-    return this.run(type, config, target, fn);
+  var transform = function(element, config, duration, fn){
+    var easing = config.easing || 'linear',
+        duration = this.runtime(duration, '500ms'),
+        delay = this.runtime(config.delay, '0s');
+
+    this.run(a(element), config, duration, delay, easing, fn);
   };
 
-  animatio.extend(animate.prototype, {
+  a.extend(transform.prototype, {
     /**
-     * Generates a new animation rule in case it hadn't been cached previously
-     * Developers can generate new rules just by using a name that doesn't match with
-     * any of the default names and adding a new rule in "config.rule".
-     *
-     * @param  {String} name    The name of animation to use
-     * @param  {Mixed}  config  The animation configuration
-     * @return {String} returns The name of the rule to apply to the object(s) to be animated
+     * Returns the duration for the animation effect
+     * @param  {Mixed}  duration The number or string containing the duration of the animation
+     * @return {String} returns  The duration in string format
      */
-    rule: function(name){
-      var prefix = animatio.browser.cssPrefix;
-      // check if rule exists
-      if(!animatio.animations[name]){
-        throw new Error(
-          animatio.format('The rule "{name}" does not exist. You need to add the rule to animatio.animations in order to use it.', { name: name })
-        );
-      }
-      // check if rule already exists in our cache
-      if(!cache[name]){
-        // create browser specific keyframe animation and insert into cache
-        cache[name] = '@' + prefix + 'keyframes ' + name;
-        cache[name] += ' { ' + (
-          animatio.format(animatio.animations[name] || this.config.name, { browser: prefix })
-        ) + '}';
+    runtime: function(duration, defaut){
+      if(duration){
+        if(typeof(duration) === 'number')
+          return duration + 'ms';
 
-        // add animation name to our inline style block so we only load it once
-        style.textContent += ('\n' + cache[name]);
+        if(typeof(duration) === 'string')
+          return (duration.match(/[\d\.]*m?s/)[0] || defaut);
       }
 
-      return name;
+      return defaut;
+    },
+    wait: function(duration, delay){
+      var map = { ms: 1, s: 1000 },
+          calc;
+
+      calc = function(time){
+        var match = time.match(/(\d+)(ms|s)/);
+        return parseFloat(RegExp.$1) * map[RegExp.$2 || 's'];
+      };
+
+      return calc(duration) + calc(delay);
     },
     /**
-     * Apply a given animation to one or more elements in a matched set
-     * @param  {String}       type   The type of animation
-     * @param  {Object}       config The animation configuration
-     * @param  {HTML Element} target The HTML element to animate
-     * @param  {Function}     fn     The animation completion callback (optional)
-     * @return {HTML Element}
+     * Resets CSS transition properties
+     * @return {Object} The object containing the reset transition properties
      */
-    run: function(type, config, target, fn){
-      var prefix = animatio.browser.cssPrefix,
-          element = animatio(target),
-          animation = null,
-          prev = element.css(prefix + 'animation-name'),
+    reset: function(){
+      var css = {},
+          prefix = a.browser.cssPrefix;
+
+      ['delay', 'duration', 'property'].forEach(function(name, index){
+        var property = reset[prefix + 'transition-' + name];
+
+        if(property){
+          css[property] = reset[prefix + 'transition-' + name] = '';
+        }
+      });
+
+      return css;
+    },
+    /**
+     * Apply animation to one or more elements in a matched set
+     * @param  {Object}   element  The jQuery object
+     * @param  {[type]}   config   The key + value pairs of properties to animate
+     * @param  {[type]}   duration The duration of the animation (optional)
+     * @param  {[type]}   delay    The time to wait before executing the animation (optional)
+     * @param  {[type]}   easing   The animation timing function type (optional)
+     * @param  {Function} fn       The callback method to execute on animation end (optional)
+     */
+    run: function(element, config, duration, delay, easing, fn){
+
+      var $t = this,
           css = {},
-          animationEnd = function(e){
-            if(!config.bubbles){
-              e.stopPropagation();
-            }
-
-            element.css(prefix + 'animation-play-state', 'paused');
-
-            if(typeof(fn) === 'function'){
-              // fire callback
-              fn.call(this);
-            };
-
+          cache = {},
+          cssTransforms = [],
+          cssTransitions = [],
+          timeout = this.wait(duration, delay),
+          property, sleep, value,
+          prefix = a.browser.cssPrefix,
+          map = { bottom: 'height', left: 'width', right: 'width', top: 'height' },
+          transitionEnd = function(e){
             // unbind event
-            this.removeEventListener(animatio.events.animationEnd, animationEnd);
+            if(typeof(e) !== 'undefined' && e.target !== e.originalTarget){
+              this.removeEventListener(animatio.events.transitionEnd, transitionEnd);
+            }
           };
 
-      // reference config
-      this.config = config;
-      // make sure we have our style block ready
-      createStyle();
-      // setup callback method after animationEnd
-      element[0].addEventListener(animatio.events.animationEnd, animationEnd);
-      // reset element
-      if(type === 'reset'){
-        element.css(prefix + 'animation', 'none');
-      }else{
-        config = config || {};
-        animation = this.rule(type, config);
+      for(property in config){
+        // check for valid property
+        if(!a.pattern.properties.test(property)){
 
-        // reset animation state for reuse
-        if(type === prev){
-          element.css(prefix + 'animation', 'none');
+          // if property is a transform property
+          if(a.pattern.transforms.test(property)){
+            cssTransforms.push(property + '(' + config[property] + ')');
+          }
+          else{
+            // check for relative values
+            if((a.pattern.relative).test(config[property])){
+              var direction = RegExp.$1,
+                  number = parseFloat(String(config[property]).replace(/\+|-|=/g, '')),
+                  current = parseFloat(element.css(property)) || 0,
+                  positionProperty = (/\b(top|left|right|bottom)\b/gi).test(property);
+                  widthHeight = (/\b(width|height)\b/gi).test(property);
+
+              if(positionProperty && element.css(property).indexOf('%') !== -1){
+                var parentOffset = element.parent().offset(),
+                    parentValue = Math.round(parentOffset[map[property]]),
+                    currentValue = Math.round(parseFloat(element.css(map[property]))),
+                    newPercentageValue = parseFloat('.' + element.css(property).replace('%', ''));
+
+                current = (parentValue - currentValue) * newPercentageValue;
+              }
+
+              // convert existing percentage width to pixels
+              if(widthHeight && element.css(property).indexOf('%') !== -1){
+                current = Math.round(element.offset()[property]);
+              }
+
+              if(direction.indexOf('+') !== -1){
+                value = current + number;
+              }else{
+                value = current - number;
+              }
+            }else{
+              value = config[property];
+            }
+            // set property value
+            css[property] = value;
+            // push property to transition properties collection
+            cssTransitions.push(property);
+          }
         }
-
-        setTimeout(function(){
-          css[prefix + 'animation-name']            = animation;
-          css[prefix + 'animation-delay']           = runtime(config.delay, '0s');
-          css[prefix + 'animation-direction']       = config.direction;
-          css[prefix + 'animation-duration']        = runtime(config.duration, '1s');
-          css[prefix + 'animation-fill-mode']       = config.fillMode;
-          css[prefix + 'animation-iteration-count'] = config.iterationCount;
-          css[prefix + 'animation-play-state']      = config.playState || 'running';
-          css[prefix + 'animation-timing-function'] = config.timingFunction;
-          css[prefix + 'transform']                 = 'translateZ(0)';
-
-          // apply styling to element
-          element.css(css) && (css = null);
-        }, 0);
       }
 
-      return target;
+      css[prefix + 'transition-delay']           = delay;
+      css[prefix + 'transition-duration']        = duration;
+      css[prefix + 'transition-property']        = cssTransitions.join(' ');
+      css[prefix + 'transition-timing-function'] = easing;
+      css[prefix + 'transform']                  = 'translateZ(0) ' + cssTransforms.join(' ');
+
+      // apply CSS and empty references
+      element.css(css) && (css = null) && (cssTransforms = cssTransitions = []);
+      // setup callback method after animationEnd
+      element[0].addEventListener(animatio.events.transitionEnd, transitionEnd);
+      // setup callback method after animationEnd
+      sleep = setTimeout(function(){
+        // reset CSS transitions
+        element.css($t.reset());
+        // trigger callback function
+        if(typeof(fn) === 'function'){
+          fn.call(element[0]);
+        }
+
+        sleep && clearTimeout(sleep) && (sleep = null);
+      }, timeout);
     }
   });
 

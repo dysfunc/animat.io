@@ -787,8 +787,9 @@
        * @param {Mixed} cls The CSS class to toggle or the function to execute
        */
       toggleClass: function(cls, fn){
-        if(!this.length)
+        if(!this.length){
           return undefined;
+        }
 
         return this[(this.hasClass(cls) ? 'removeClass' : 'addClass')](fn && fn(cls) || cls);
       }
@@ -928,6 +929,6 @@
 
   global.animatio = animatio;
 
-  '$' in global || (global.$ = animatio);
+  !global.$ && (global.$ = animatio);
 
 })(window);
