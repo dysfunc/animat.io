@@ -99,7 +99,7 @@
           transitionEnd = function(e){
             // unbind event
             if(typeof(e) !== 'undefined' && e.target !== e.originalTarget){
-              this.removeEventListener(animatio.events.transitionEnd, transitionEnd);
+              element.off('transitionend', transitionEnd);
             }
           };
 
@@ -159,7 +159,7 @@
       // apply CSS and empty references
       element.css(css) && (css = null) && (cssTransforms = cssTransitions = []);
       // setup callback method after animationEnd
-      element[0].addEventListener(animatio.events.transitionEnd, transitionEnd);
+      element.on('transitionend', transitionEnd);
       // setup callback method after animationEnd
       sleep = setTimeout(function(){
         // reset CSS transitions

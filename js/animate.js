@@ -149,7 +149,7 @@
             };
 
             // unbind event
-            this.removeEventListener(animatio.events.animationEnd, animationEnd);
+            element.off('animationend', animationEnd);
           };
 
       // reference config
@@ -157,7 +157,7 @@
       // make sure we have our style block ready
       createStyle();
       // setup callback method after animationEnd
-      element[0].addEventListener(animatio.events.animationEnd, animationEnd);
+      element.on('animationend', animationEnd);
       // reset element
       if(type === 'reset'){
         element.css(prefix + 'animation', 'none');
@@ -165,7 +165,7 @@
         config = config || {};
         animation = this.rule(type, config);
 
-        var parse = animation.rule.split(/[{};:]/).filter(String).map(function(str){
+        var parse = animation.rule.split(animatio.pattern.parseCSS).filter(String).map(function(str){
             return str.trim();
         });
 

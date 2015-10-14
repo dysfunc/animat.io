@@ -44,6 +44,8 @@
       splice = arrayPrototype.splice,
       indexOf = arrayPrototype.indexOf,
       trim = stringPrototype.trim,
+      uid = 1,
+      handlers = {},
       getComputedStyle = defaultView && defaultView.getComputedStyle,
       cssNumber = { 'columns': 1, 'columnCount': 1, 'fillOpacity': 1, 'flexGrow': 1, 'flexShrink': 1, 'fontWeight': 1, 'lineHeight': 1, 'opacity': 1, 'order': 1, 'orphans': 1, 'widows': 1, 'zIndex': 1, 'zoom': 1 },
       formatValue = function(prop, value){
@@ -803,8 +805,9 @@
     each(['addClass', 'removeClass'], function(index, method){
       a.fn[method] = function(cls){
 
-        if(this[0] === undefined)
+        if(this[0] === undefined){
           return;
+        }
 
         for(var i = 0, k = this.length; i < k; i++){
           var element = this[i],
@@ -817,7 +820,7 @@
           if(typeof(cls) === 'function'){
             a(element)[method](cls.call(element, index, element.className));
           }else{
-            each(cls.split(' '), function(name){
+            each(cls.split(' '), function(i, name){
               element.classList[add ? 'add' : 'remove'](name);
             });
           }
@@ -899,6 +902,149 @@
     }());
 
     /*------------------------------------
+     * Events
+     ------------------------------------*/
+
+    var animationEnd = { webkit: 'webkitAnimationEnd', moz: 'animationend', o: 'oAnimationEnd',  ms: 'animationend' },
+        transitionEnd = { webkit: 'webkitTransitionEnd', moz: 'transitionend', o: 'oTransitionEnd',  ms: 'transitionend' },
+        alias = {
+            animationend  : animationEnd[a.browser.prefix || 'webkit'],
+            blur          : a.browser.webkit ? 'focusout' : 'blur',
+            enter         : 'focus',
+            focus         : a.browser.webkit ? 'focusin' : 'focus',
+            leave         : 'blur',
+            mouseenter    : 'mouseover',
+            mouseleave    : 'mouseout',
+            transitionend : transitionEnd[a.browser.prefix || 'webkit'],
+            turn          : 'orientationchange'
+          };
+
+    each([
+     'blur', 'change', 'click', 'dblclick', 'enter', 'error', 'focus', 'focusin', 'focusout', 'hashchange',
+     'keydown', 'keypress', 'keyup', 'leave', 'load', 'mousedown', 'mousemove', 'mouseout', 'mouseover',
+     'mouseenter', 'mouseleave', 'mouseup', 'resize', 'scroll', 'select', 'submit', 'unload'
+    ], function(i, name){
+
+      a.fn[name] = function(data, fn){
+        if(typeof(data) === 'function'){
+          fn = data;
+          data = null;
+        }
+
+        return fn && this.on(name + ' ' + alias[name] || name, data, fn) || this[0] && this[0][name] && this[0][name]() || undefined;
+      }
+    });
+
+    /**
+     * Add or remove one or more event handlers
+     * @param  {String}   event    String containing the event type(s) i.e. `click` `change`
+     * @param  {Anything} data     Data to be passed to the handler in event.data (optional)
+     * @param  {Function} fn       The function to execute when the event is triggered
+     */
+    each(['on', 'off'], function(index, method){
+      a.fn[method] = function(type, data, fn){
+        if(this[0] === undefined){
+          return;
+        }
+
+        if(fn == null){
+          fn = data;
+          data = null;
+        }
+
+        return this.each(function(){
+          a.events[index === 0 ? 'on' : 'off'](this, type, data, fn);
+        });
+      }
+    });
+
+    a.events = {
+      /**
+       * Iterates over a collection of events, executing a function for each item
+       * @param  {String}   events   The string or object containing the events
+       * @param  {Function} fn       The function to execute on each event type
+       * @param  {Function} iterator The function to execute on each item
+       */
+      each: function(events, fn, iterator){
+        if(typeof(events) === 'object'){
+          a.each(events, iterator);
+        }else{
+          each(('' + events).split(/\s/), function(i, event){
+            iterator(event, fn);
+          });
+        }
+      },
+      /**
+       * Returns an event handler for a specific element from the handlers cache
+       * @param  {DOM Element} element The DOM element
+       * @param  {Object}      event   The event object
+       * @param  {Function}    fn      The passed event handler
+       * @return {Object}              The matched event handler from the cache
+       */
+      remove: function(element, event, fn){
+        return (handlers[element.uid] || []).filter(function(handler){
+          return handler
+            && (!event || handler.type === event)
+            && (!fn    || handler.fn === fn)
+        });
+      },
+      /**
+       * Helper method for binding events to elements
+       * @param {DOM Element} element     The DOM element(s)
+       * @param {String}      events      The event to bind to
+       * @param {Function}    fn          The function to execute on the event
+       * @param {Anything}    data        Data passed to the event handler
+       * @param {Boolean}     capture     The flag to determine if we capture the event or not
+       */
+      on: function(element, events, data, fn, capture){
+        var unique = element.uid || (element.uid = uid++),
+            eventHandlers = handlers[unique] || (handlers[unique] = []),
+            capture = (/focusin|focusout/i).test(events) || !!capture;
+
+        a.events.each(events, fn, function(type, fn){
+          var proxy = a.events.proxy(element, type, data, fn),
+              handler = { fn: fn, index: eventHandlers.length, proxy: proxy, type: type };
+
+          eventHandlers.push(handler)
+
+          element.addEventListener(handler.type, handler.proxy, capture);
+        });
+      },
+      /**
+       * Helper method for unbinding events to elements
+       * @param {DOM Element} element The DOM element
+       * @param {String}      events  The event to unbind
+       * @param {Function}    fn      The function that maps to the event
+       */
+      off: function(element, events, data, fn){
+        a.events.each(events, fn, function(event, fn){
+          each(a.events.remove(element, event, fn), function(i, handler){
+            delete handlers[element.uid][handler.index];
+            element.removeEventListener(handler.type, handler.proxy);
+          });
+        });
+      },
+      /**
+       * Helper function for event callback
+       * @param  {Element}  element The DOM element
+       * @param  {Object}   event   The event object
+       * @param  {Function} fn      The event handler function
+       * @return {Function}         The proxy function
+       */
+      proxy: function(element, event, data, fn){
+        return function(e){
+          var result = fn && fn.call(element, a.extend(true, e, { data: data }));
+
+          if(result === false){
+            e.preventDefault();
+          }
+
+          return result;
+        }
+      }
+    };
+
+    /*------------------------------------
      * Feature support detection
      ------------------------------------*/
 
@@ -912,15 +1058,6 @@
       cssTransitionEnd   : supports('TransitionEnd') in documentElement.style,
       cssTransition      : supports('Transition') in documentElement.style,
       cssTransform3d     : ('WebKitCSSMatrix' in global) && ('m11' in new WebKitCSSMatrix()),
-    };
-
-    /*------------------------------------
-     * Event mapping
-     ------------------------------------*/
-
-    a.events = {
-      transitionEnd : (function(){ var map = { webkit: 'webkitTransitionEnd', moz: 'transitionend', o: 'oTransitionEnd',  ms: 'transitionend' }; return map[a.browser.prefix || 'webkit'] })(),
-      animationEnd  : (function(){ var map = { webkit: 'webkitAnimationEnd', moz: 'animationend', o: 'oAnimationEnd',  ms: 'animationend' }; return map[a.browser.prefix || 'webkit'] })()
     };
 
     a.emptyFn = function(){};
