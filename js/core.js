@@ -926,6 +926,8 @@
 
   })();
 
-  window.animatio = animatio;
+  global.animatio = animatio;
+
+  '$' in global || (global.$ = animatio);
 
 })(window);
