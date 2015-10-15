@@ -47,9 +47,8 @@
       uid = 1,
       handlers = {},
       getComputedStyle = defaultView && defaultView.getComputedStyle,
-      cssNumber = { 'columns': 1, 'columnCount': 1, 'fillOpacity': 1, 'flexGrow': 1, 'flexShrink': 1, 'fontWeight': 1, 'lineHeight': 1, 'opacity': 1, 'order': 1, 'orphans': 1, 'widows': 1, 'zIndex': 1, 'zoom': 1 },
       formatValue = function(prop, value){
-        return typeof(value) === 'number' && !cssNumber[prop] && (parseFloat(value) + 'px') || value;
+        return typeof(value) === 'number' && !animatio.pattern.noUnit.test(prop) && (parseFloat(value) + 'px') || value;
       },
       each = function(collection, fn){
         var k = collection.length,
@@ -197,9 +196,17 @@
        * @return {String}     The modified string
        */
       camelCase: function(str){
-        return str.replace(/^-ms-/, 'ms-').replace(a.pattern.camel, function(match, chr){
+        return str.replace(/^-ms-/, 'ms-').replace(/-([\da-z])/gi, function(match, chr){
           return chr ? chr.toUpperCase() : '';
         });
+      },
+      /**
+       * Returns the passed string with its first letter in uppercase
+       * @param  {String} str String to convert
+       * @return {String}     The modified string
+       */
+      capitalize: function(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
       },
       /**
        * Converts a camelCase string to a dasherized one
@@ -912,7 +919,7 @@
     each(['width', 'height'], function(i, method){
       a.fn[method] = function(value){
         var element = this[0],
-            capitalize = method.charAt(0).toUpperCase() + method.slice(1);
+            capitalize = a.capitalize(method);
 
         if(!element){
           return undefined;
@@ -948,14 +955,13 @@
 
     a.pattern = {
       browser       : /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i,
-      camel         : /-([\da-z])/gi,
-      cssNumbers    : /^((margin|padding|border)(top|right|bottom|left)(width|height)?|height|width|zindex?)$/i,
       device        : /\b((ip)(hone|ad|od)|playbook|hp-tablet)\b/i,
       duration      : /[\d\.]*m?s/,
       ios           : /\b((ip)(hone|ad|od))\b/i,
       escape        : /('|\\)/g,
       jsonString    : /^(\{|\[)/i,
       nodes         : /^(?:1|3|8|9|11)$/,
+      noUnit        : /^(columns|columnCount|fillOpacity|flex|flexGrow|flexShrink|fontWeight|lineHeight|opacity|order|orphans|widows|zIndex|zoom)$/i,
       numbers       : /^(0|[1-9][0-9]*)$/i,
       parseCSS      : /[{:;}]/,
       prefixes      : /^-webkit-|-moz-|-o-|ms-/gi,
@@ -1163,19 +1169,16 @@
      ------------------------------------*/
 
     var supports = function(name){
-      return a.camelCase(('-' + a.browser.prefix).replace(/^-ms-/, 'ms-') + name);
+      return a.capitalize(a.browser.prefix).replace(/^Ms/, 'ms') + name;
     };
 
     a.supports = {
       cssAnimationEvents : supports('AnimationName') in documentElement.style,
+      cssAnimationEnd    : !!animationEnd[a.browser.prefix],
       cssTransform       : supports('Transform') in documentElement.style,
-      cssTransitionEnd   : supports('TransitionEnd') in documentElement.style,
+      cssTransitionEnd   : !!transitionEnd[a.browser.prefix],
       cssTransition      : supports('Transition') in documentElement.style,
       cssTransform3d     : ('WebKitCSSMatrix' in global) && ('m11' in new WebKitCSSMatrix()),
-      homescreen         : ('standalone' in navigator),
-      localStorage       : typeof(global.localStorage) !== undefined,
-      pushState          : ('pushState' in global.history) && ('replaceState' in global.history),
-      retina             : ('devicePixelRatio' in global) && global.devicePixelRatio > 1,
       touch              : ('ontouchstart' in global)
     };
 
