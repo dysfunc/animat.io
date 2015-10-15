@@ -89,9 +89,8 @@
      * Developers can generate new rules just by using a name that doesn't match with
      * any of the default names and adding a new rule in "config.rule".
      *
-     * @param  {String} name    The name of animation to use
-     * @param  {Mixed}  config  The animation configuration
-     * @return {String} returns The name of the rule to apply to the object(s) to be animated
+     * @param  {String} name    String containing the the name of animation
+     * @return {Object}         Object containing the rule name and contents
      */
     rule: function(name){
       var prefix = animatio.browser.cssPrefix;
@@ -156,7 +155,7 @@
       this.config = config;
       // make sure we have our style block ready
       createStyle();
-      // setup callback method after animationEnd
+      // bind to animationEnd event
       element.on('animationend', animationEnd);
       // reset element
       if(type === 'reset'){
@@ -170,7 +169,6 @@
         });
 
         animatio.each(parse, function(index, property){
-          // if will-change property
           if(animatio.pattern.willChange.test(property)){
             var dasherize = animatio.dasherize(RegExp.$1);
 
@@ -195,7 +193,7 @@
           css[prefix + 'animation-timing-function'] = config.timingFunction;
           css['will-change']                        = cssWillChange.join(', ');
           // apply styling to element
-          element.css(css) && (css = null);
+          element.css(css) && (css = {});
         }, 0);
       }
 
