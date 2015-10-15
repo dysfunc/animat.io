@@ -3,12 +3,11 @@
   var reset = {},
       // browser prefix
       prefix = animatio.browser.cssPrefix;
-
   /**
-   * Perform a custom animation of a set of CSS properties
-   * @param  {Object}   config   The key + value pairs of properties to animate
-   * @param  {Mixed}    duration The string or number in milliseconds or seconds
-   * @param  {Function} fn       The callback method to execute on animation end (optional)
+   * Animate DOM elements using CSS transforms/transitions
+   * @param  {Object}   config   Object containing property key/value pairs
+   * @param  {Mixed}    duration String or Number representing the duration in milliseconds or seconds
+   * @param  {Function} fn       Function to execute on animationEnd (optional)
    */
   animatio.fn.transform = function(config, duration, fn){
     config = animatio.extend(true, {
@@ -30,7 +29,7 @@
         duration = this.runtime(duration, '500ms'),
         delay = this.runtime(config.delay, '0s');
 
-    this.run(animatio(element), config, duration, delay, easing, fn);
+    return this.run(animatio(element), config, duration, delay, easing, fn);
   };
 
   animatio.extend(transform.prototype, {
@@ -41,15 +40,23 @@
      */
     runtime: function(duration, defaut){
       if(duration){
-        if(typeof(duration) === 'number')
+        if(typeof(duration) === 'number'){
           return duration + 'ms';
+        }
 
-        if(typeof(duration) === 'string')
+        if(typeof(duration) === 'string'){
           return (duration.match(/[\d\.]*m?s/)[0] || defaut);
+        }
       }
 
       return defaut;
     },
+    /**
+     * Returns the wait time before executing the callback function
+     * @param  {Mixed} duration String or Number the duration in milliseconds or seconds
+     * @param  {Mixed} delay    String or Number the delay in milliseconds or seconds
+     * @return {Number}         The calculated wait time in seconds
+     */
     wait: function(duration, delay){
       var map = { ms: 1, s: 1000 },
           calc;
@@ -62,8 +69,8 @@
       return calc(duration) + calc(delay);
     },
     /**
-     * Resets CSS transition properties
-     * @return {Object} The object containing the reset transition properties
+     * Resets CSS properties
+     * @return {Object} Object containing the reset properties
      */
     reset: function(){
       var css = {};
@@ -75,6 +82,8 @@
           css[property] = reset[prefix + 'transition-' + name] = '';
         }
       });
+
+      css['will-change'] = '';
 
       return css;
     },
@@ -93,13 +102,13 @@
           css = {},
           cssTransforms = [],
           cssTransitions = [],
-          willChange = [],
+          cssWillChange = [],
           timeout = this.wait(duration, delay),
           property, sleep, value,
           map = { bottom: 'height', left: 'width', right: 'width', top: 'height' },
           transitionEnd = function(e){
             // reset will-change properties
-            element[0].style.willChange = '';
+            element.css('will-change', '');
             // unbind event
             if(e && e.target !== e.originalTarget){
               element.off('transitionend', transitionEnd);
@@ -107,28 +116,26 @@
           };
 
       for(property in config){
-        // check for valid property
         if(!animatio.pattern.properties.test(property)){
-          // if property is a transform property
+          // if transform property
           if(animatio.pattern.transforms.test(property)){
             cssTransforms.push(property + '(' + config[property] + ')');
           }
           else{
+            // if will-change property
             if(animatio.pattern.willChange.test(property)){
-              // add property to will-change
-              if(willChange.indexOf(RegExp.$1) === -1){
-                willChange.push(RegExp.$1);
+              var dasherize = animatio.dasherize(RegExp.$1);
+
+              if(cssWillChange.indexOf(dasherize) === -1){
+                cssWillChange.push(dasherize);
               }
             }
             // check for relative values
             if((animatio.pattern.relative).test(config[property])){
-              var direction = RegExp.$1,
-                  number = parseFloat(String(config[property]).replace(/\+|-|=/g, '')),
-                  current = parseFloat(element.css(property)) || 0,
-                  positionProperty = (/\b(top|left|right|bottom)\b/gi).test(property);
-                  widthHeight = (/\b(width|height)\b/gi).test(property);
+              var number = parseFloat(String(config[property]).replace(/([\+|-|=])/g, '')),
+                  current = parseFloat(element.css(property)) || 0;
 
-              if(positionProperty && element.css(property).indexOf('%') !== -1){
+              if((/\b(top|left|right|bottom)\b/gi).test(property) && element.css(property).indexOf('%') !== -1){
                 var parentOffset = element.parent().offset(),
                     parentValue = Math.round(parentOffset[map[property]]),
                     currentValue = Math.round(parseFloat(element.css(map[property]))),
@@ -137,15 +144,11 @@
                 current = (parentValue - currentValue) * newPercentageValue;
               }
               // convert existing percentage width to pixels
-              if(widthHeight && element.css(property).indexOf('%') !== -1){
+              if((/\b(width|height)\b/gi).test(property) && element.css(property).indexOf('%') !== -1){
                 current = Math.round(element.offset()[property]);
               }
 
-              if(direction.indexOf('+') !== -1){
-                value = current + number;
-              }else{
-                value = current - number;
-              }
+              value = current + number;
             }else{
               value = config[property];
             }
@@ -156,15 +159,13 @@
           }
         }
       }
-
-      // set will-change properties on element
-      element[0].style.willChange = willChange.join(', ');
       // build out transition
       css[prefix + 'transition-delay']           = delay;
       css[prefix + 'transition-duration']        = duration;
       css[prefix + 'transition-property']        = cssTransitions.join(' ');
       css[prefix + 'transition-timing-function'] = easing;
       css[prefix + 'transform']                  = 'translateZ(0) ' + cssTransforms.join(' ');
+      css['will-change']                         = cssWillChange.join(', ');
       // apply CSS and empty references
       element.css(css) && (css = null) && (cssTransforms = cssTransitions = []);
       // setup callback method after animationEnd

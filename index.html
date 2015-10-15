@@ -345,7 +345,7 @@
                 <button id="animate_box" class="btn">Click for magic</button>
               </div>
               <div class="col-md-6">
-                <button id="growl" class="btn">Growl Notifications</button>
+                <button id="growl" class="btn">OSX Notification</button>
               </div>
 
             </div>
@@ -390,38 +390,26 @@
           $('#animate_me').animate('lightSpeedIn', function(){
             $(this).animate('lightSpeedOut', function(){
               $(this).animate('flipInX', function(){
-                //console.log($('#animate_me').offset());
                 //not relative
-                $('#animate_me')
+                $(this)
                   .animate('swing')
                   .transform({ left: '20%', top: 60, opacity: 1, width: 500, height: 200 }, 1000, function(){
                   //relative string
-                  $('#animate_me').animate('flipInX').transform({ left: '-=100', top: '+=60', opacity: 1, width: '+=500', height: 200 }, 1000, function(){
+                  $(this).animate('flipInX').transform({ left: '-=100', top: '+=60', opacity: 1, width: '+=500', height: 200 }, 1000, function(){
                     //relative stringify
-                    $('#animate_me').animate('swing').transform({ left: '-=' + 100, top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 200 }, 1000, function(){
-                      //$('#animate_me').transform({ left: '50%', top: '20%', borderRadius: '10px', width: '50%', height: 100, delay: 500 }, 1000, function(){
-                      // console.log('fired 2');
-                        //console.log($('#animate_me').offset(), $('#animate_me').offset().width);
-
-                      $('#animate_me').transform({ left: '50%', top: '+=' + 60, borderRadius: '4px', width: '-=' + 800, height: 80}, 1000, function(){
-                      //   console.log('fired 3');
-                      //   $(this).animate('flipOutX', function(){
-                      //     $(this).animate('flipInY', function(){
-                      //       $('#animate_me').transform({ left: '-=100', top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 500 }, 1000, function(){
-                      //         console.log('fired 4');
-                      //         $('#animate_me').transform({ left: '50', borderRadius: '2px', top: 40, width: '50%', height: 100}, 1500, function(){
-                      //           console.log('fired 5');
-                      //           $('#animate_me').transform({ left: '50%', top: '50%', width: 50, height: 50, borderRadius: 0, opacity: 1 }, 1500, function(){
-                      //             console.log('fired 6');
-                      //           });
-                      //         });
-                      //       });
-                      //     });
-                      //   })
-                        //console.log($('#animate_me').offset(), $('#animate_me').offset().width);
-                        $('#animate_me').transform({ borderRadius: 0, width: 50, height: 50 }, 1000, function(){
-
+                    $(this).animate('swing').transform({ left: '-=' + 100, top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 200 }, 1000, function(){
+                      $(this).transform({ left: '50%', top: '+=' + 60, borderRadius: '4px', width: '-=' + 800, height: 80}, 1000, function(){
+                        $(this).animate('flipOutX', function(){
+                          $(this).animate('flipInY', function(){
+                            $(this).transform({ left: '-=100', top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 500 }, 1000, function(){
+                              $(this).transform({ left: '50', borderRadius: '2px', top: 40, width: '50%', height: 100}, 1500, function(){
+                                $(this).transform({ left: '50%', top: '50%', width: 50, height: 50, borderRadius: 0, opacity: 1 }, 1500);
+                              });
+                            });
+                          });
                         });
+
+                        $(this).transform({ borderRadius: 0, width: 50, height: 50 }, 1000);
                       });
                     });
                   });
@@ -429,7 +417,6 @@
               });
             });
           });
-
         });
       });
     </script>

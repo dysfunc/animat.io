@@ -202,6 +202,14 @@
         });
       },
       /**
+       * Converts a camelCase string to a dasherized one
+       * @param  {String} str String to convert
+       * @return {String}     The modified string
+       */
+      dasherize: function(str){
+        return a.trim(str).replace(/([A-Z])/g, '-$1').replace(/[-_\s]+/g, '-').toLowerCase();
+      },
+      /**
        * Sets arbitrary data associated to an element or retrieve value from the dataset
        * @param  {Object} element
        * @param  {String} key     The key in the dataset
@@ -213,7 +221,7 @@
             convert = function(property){
               var stored = element.dataset[property];
 
-              return (/^(\{|\[)/i).test(stored) ? JSON.parse(stored) : stored;
+              return (a.pattern.jsonString).test(stored) ? JSON.parse(stored) : stored;
             };
 
         if(element === undefined){
@@ -244,7 +252,6 @@
 
           return data;
         }
-
 
         return convert(key);
       },
@@ -947,6 +954,7 @@
       duration      : /[\d\.]*m?s/,
       ios           : /\b((ip)(hone|ad|od))\b/i,
       escape        : /('|\\)/g,
+      jsonString    : /^(\{|\[)/i,
       nodes         : /^(?:1|3|8|9|11)$/,
       numbers       : /^(0|[1-9][0-9]*)$/i,
       parseCSS      : /[{:;}]/,
@@ -1086,17 +1094,21 @@
        * @return {Object}              The matched event handler from the cache
        */
       remove: function(element, event, fn){
-        return (handlers[element.uid] || []).filter(function(handler){
+        if(!handlers[element.uid]){
+          return [];
+        }
+
+        return (handlers[element.uid]).filter(function(handler){
           return handler && (!event || handler.type === event) && (!fn || handler.fn === fn)
         });
       },
       /**
-       * Helper method for binding events to elements
-       * @param {DOM Element} element     The DOM element(s)
-       * @param {String}      events      The event to bind to
-       * @param {Function}    fn          The function to execute on the event
-       * @param {Anything}    data        Data passed to the event handler
-       * @param {Boolean}     capture     If ture, the event will be captured
+       * Bind one or more events to an element
+       * @param {DOM Element} element     DOM element
+       * @param {String}      events      String containing the event type(s)
+       * @param {Function}    fn          The function to execute when the event happens
+       * @param {Anything}    data        Use defined data passed to along with the event (optional)
+       * @param {Boolean}     capture     If true, the event will be captured (optional)
        */
       on: function(element, events, data, fn, capture){
         var unique = element.uid || (element.uid = uid++),
@@ -1113,9 +1125,9 @@
         });
       },
       /**
-       * Helper method for unbinding events to elements
-       * @param {DOM Element} element The DOM element
-       * @param {String}      events  The event to unbind
+       * Unbind one or more events from an element
+       * @param {DOM Element} element DOM element
+       * @param {String}      events  String containing the event type(s)
        * @param {Function}    fn      The function that maps to the event
        */
       off: function(element, events, data, fn){

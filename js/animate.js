@@ -133,20 +133,20 @@
           animation = null,
           prev = element.css(prefix + 'animation-name'),
           css = {},
-          willChange = [],
+          cssWillChange = [],
           animationEnd = function(e){
             if(!config.bubbles){
               e.stopPropagation();
             }
-            // pause animation
-            element.css(prefix + 'animation-play-state', 'paused');
-            // strip will change properties
-            element[0].style.willChange = '';
             // trigger callback if defined
             if(typeof(fn) === 'function'){
               // fire callback
               fn.call(this);
             };
+            // pause animation
+            element
+              .css(prefix + 'animation-play-state', 'paused')
+              .css('will-change', '');
 
             // unbind event
             element.off('animationend', animationEnd);
@@ -170,16 +170,15 @@
         });
 
         animatio.each(parse, function(index, property){
-          // check if property is a valid will-change property
+          // if will-change property
           if(animatio.pattern.willChange.test(property)){
-            // add property to will-change
-            if(willChange.indexOf(RegExp.$1) === -1){
-              willChange.push(RegExp.$1);
+            var dasherize = animatio.dasherize(RegExp.$1);
+
+            if(cssWillChange.indexOf(dasherize) === -1){
+              cssWillChange.push(dasherize);
             }
           }
         });
-        // set will-change properties on element
-        element.css('will-change', willChange.join(', '));
         // reset animation state for reuse
         if(type === prev){
           element.css(prefix + 'animation', 'none');
@@ -194,6 +193,7 @@
           css[prefix + 'animation-iteration-count'] = config.iterationCount;
           css[prefix + 'animation-play-state']      = config.playState || 'running';
           css[prefix + 'animation-timing-function'] = config.timingFunction;
+          css['will-change']                        = cssWillChange.join(', ');
           // apply styling to element
           element.css(css) && (css = null);
         }, 0);
