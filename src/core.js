@@ -1040,16 +1040,16 @@
     var animationEnd = { webkit: 'webkitAnimationEnd', moz: 'animationend', o: 'oAnimationEnd',  ms: 'animationend' },
         transitionEnd = { webkit: 'webkitTransitionEnd', moz: 'transitionend', o: 'oTransitionEnd',  ms: 'transitionend' },
         alias = {
-            animationend  : animationEnd[a.browser.prefix || 'webkit'],
-            blur          : a.browser.webkit ? 'focusout' : 'blur',
-            enter         : 'focus',
-            focus         : a.browser.webkit ? 'focusin' : 'focus',
-            leave         : 'blur',
-            mouseenter    : 'mouseover',
-            mouseleave    : 'mouseout',
-            transitionend : transitionEnd[a.browser.prefix || 'webkit'],
-            turn          : 'orientationchange'
-          };
+          animationend  : animationEnd[a.browser.prefix || 'webkit'],
+          blur          : a.browser.webkit ? 'focusout' : 'blur',
+          enter         : 'focus',
+          focus         : a.browser.webkit ? 'focusin' : 'focus',
+          leave         : 'blur',
+          mouseenter    : 'mouseover',
+          mouseleave    : 'mouseout',
+          transitionend : transitionEnd[a.browser.prefix || 'webkit'],
+          turn          : 'orientationchange'
+        };
 
     each([
      'blur', 'change', 'click', 'dblclick', 'enter', 'error', 'focus', 'focusin', 'focusout', 'hashchange',
@@ -1063,7 +1063,7 @@
           data = null;
         }
 
-        return typeof(fn) === 'function' && this.on(alias[name] || name, data, fn) || this[0] && this[0][name] && this[0][name]() || undefined;
+        return fn && this.on(alias[name] || name, data, fn) || this[0] && this[0][name] && this[0][name]() || undefined;
       }
     });
 
