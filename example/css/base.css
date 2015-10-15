@@ -1,0 +1,395 @@
+body {
+  background: linear-gradient(180deg, #393a44 10%, #e85e5e 90%);
+  color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+}
+
+* {
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+}
+
+a {
+  color: rgba(0,0,0,.4);
+}
+
+a:hover {
+  color: rgba(0,0,0,.5);
+}
+
+h1, h2, h3, h4, h5, h6,
+span.ext {
+  font-family: "Arvo";
+  font-weight: 400;
+  letter-spacing: 0em;
+}
+
+h5 {
+  color: rgba(0,0,0,.3);
+  font-weight: 700;
+  letter-spacing: 0em;
+  text-transform: uppercase;
+}
+
+hr {
+  border-top-color: rgba(255,255,255,.1);
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+
+.mt40 {
+  margin-top: 40px;
+}
+
+.btn-large {
+  font-family: "Arvo";
+}
+
+.heading {
+  color: #6f5a40;
+}
+
+.inline {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+}
+
+.block {
+  margin: 2px 0;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center
+}
+
+.auto-margin {
+  margin: auto;
+}
+
+.rel {
+  position: relative;
+}
+
+.mtn {
+  margin-top: 0;
+}
+
+.silver {
+  color: #ebebeb;
+}
+
+.alt {
+  color: #e85e5e;
+}
+
+.offwhite-bg {
+  background-color: #f7f7f7;
+}
+
+.silver-bg {
+  background-color: #ebebeb;
+}
+
+.container {
+  margin: 0 auto;
+  position: relative;
+}
+
+section {
+  padding-top: 10px;
+  position: relative;
+}
+
+#header {
+  background-color: rgba(0,0,0, .1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+
+#header ul {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+}
+
+#header ul li {
+  display: inline-block;
+  *display: inline;
+  font-family: "Arvo";
+  padding: 5px;
+  vertical-align: middle;
+  zoom: 1;
+}
+
+#header ul li a {
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  padding: 5px 10px;
+  -webkit-transition: background-color .3s ease-in-out;
+     -moz-transition: background-color .3s ease-in-out;
+      -ms-transition: background-color .3s ease-in-out;
+          transition: background-color .3s ease-in-out;
+}
+
+#header ul li a:hover {
+  background-color: rgba(0,0,0,.1);
+  text-decoration: none;
+}
+
+#header ul li.active a {
+  background-color: rgba(0,0,0,.2);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0, 0);
+}
+
+#header h1 {
+  color: #fff;
+  font-size: 3em;
+  /*text-shadow: 0 3px 0 rgba(255,255,255,.5);*/
+  position: absolute;
+  left: 0;
+  top: -15px;
+}
+
+#header h1 span.ext {
+  color: #ebebeb;
+  font-size: .5em;
+}
+
+#header ul li h4 {
+  color: rgba(#fff, .9);
+  text-shadow: 0 2px 0 rgba(255,255,255,.5);
+}
+
+#splash-wrapper {
+  padding: 0;
+}
+
+#splash {
+  background-color: rgba(0,0,0, .1);
+  margin: 0 auto;
+  padding: 60px 0 80px;
+  text-align: center;
+  width: 100%;
+}
+
+#splash h1 {
+  color: #fff;
+  font-size: 110px;
+  margin-bottom: 20px;
+/* end of 4 level deep dark shadow */
+}
+
+#splash h1:before {
+  content: "animat.io";
+  position: absolute;
+  opacity: .15;
+  text-shadow:
+    1px 1px 0 #000,
+    2px 2px 0 #000, /* end of 2 level deep grey shadow */
+    3px 3px 0 #000,
+    4px 4px 0 #000,
+    5px 5px 0 #000,
+    6px 6px 0 #000,
+    7px 7px 0 #000,
+    8px 8px 0 #000,
+    9px 9px 0 #000;
+}
+
+#splash h2 {
+  color: rgba(255,255,255, .8);
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.links {
+  margin: 10px auto 0;
+  position: absolute;
+  right: -20px;
+  text-align: right;
+  top: 60px;
+  width: 400px;
+  z-index: 99;
+}
+
+.links .fb-like {
+  margin-left: -4px;
+  margin-top: -5px;
+  margin-right: 5px;
+}
+
+.links .inline {
+  vertical-align: middle;
+}
+
+#download {
+  margin: 30px 0 0 0;
+  text-align: center;
+}
+
+#content {
+  bottom: 0;
+  overflow-y: auto;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 60px;
+  right: 0;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+#download-btn {
+  margin: 30px;
+  text-align: center
+}
+
+.html-badge {
+  background: url('../images/badge.png') no-repeat top left;
+  background-size: 75px 84px;
+  margin: 20px auto;
+  height: 84px;
+  width: 75px;
+}
+
+pre {
+  background-color: rgba(255,255,255, .1);
+  border: 0;
+  color: rgba(255,255,255,.5);
+}
+
+code {
+  background-color: rgba(0,0,0, .1);
+  color: #fff;
+  display: inline-block;
+  padding: 0 3px;
+}
+
+.btn {
+  background: rgba(0,0,0, .1);
+  outline: none;
+  font-weight: 300;
+}
+
+.btn[data-effect]{
+  font-size: 12px;
+}
+
+.btn:hover {
+  background-color:  rgba(0,0,0, .15);
+  color: #fff;
+}
+
+.btn:active,
+.btn:focus {
+  background: rgba(0,0,0, .2);
+  color: #fff;
+  outline: 1px dotted rgba(255,255,255, 0);
+}
+
+.transform-container {
+  height: 300px;
+  position: relative;
+}
+
+#animate_me {
+  border: 1px solid rgba(210,255,0, .5);
+  height: 50px;
+  position: absolute;
+  left: 50%;
+  margin-left: -25px;
+  margin-top: -25px;
+  opacity: 1;
+  outline: 1px solid transparent;
+  top: 50%;
+  width: 50px;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+#animate_me > div {
+  background: transparent;
+  border: 1px solid rgba(210,255,0, .5);
+  border-radius: 100%;
+  height: 8px;
+  left: -4px;
+  position: absolute;
+  top: -4px;
+  width: 8px;
+}
+
+#animate_me > div:nth-child(2){
+  bottom: auto;
+  left: auto;
+  right: -4px;
+  top: -4px;
+}
+
+#animate_me > div:nth-child(3){
+  bottom: -4px;
+  left: -4px;
+  right: auto;
+  top: auto;
+}
+
+#animate_me > div:nth-child(4){
+  left: auto;
+  bottom: -4px;
+  right: -4px;
+  top: auto;
+}
+
+#notification {
+  background: rgba(0,0,0,.4);
+  border-radius: 3px;
+  opacity: 0;
+  padding: 20px;
+  position: absolute;
+  right: 20px;
+  text-align: center;
+  top: 0;
+  width: 150px;
+}
