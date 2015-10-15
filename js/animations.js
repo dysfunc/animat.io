@@ -1,11 +1,11 @@
-(function(window, a){
+(function(window, $){
   'use strict';
 
   /*------------------------------------
    * Dan Eden - animate.css
    ------------------------------------*/
 
-  a.animations = {
+  $.animations = {
     bounce:"0%, 20%, 50%, 80%, 100% {{browser}transform: translateY(0);}40% {{browser}transform: translateY(-30px);}60% {{browser}transform: translateY(-15px);}",
     bounceIn:"0% {opacity: 0;{browser}transform: scale(.3);}50% {opacity: 1;{browser}transform: scale(1.05);}70% {{browser}transform: scale(.9);}100% {{browser}transform: scale(1);}",
     bounceInUp:"0% {opacity: 0;{browser}transform: translateY(100%);}60% {opacity: 1;{browser}transform: translateY(-30px);}80% {{browser}transform: translateY(10px);}100% {{browser}transform: translateY(0);}",
@@ -79,7 +79,7 @@
    * miniMAC - magic
    ------------------------------------*/
 
-  a.extend(a.animations, {
+  $.extend($.animations, {
     magic: "0% { opacity: 1; {browser}transform-origin: 100% 200%; {browser}transform: scale(1, 1) rotate(0deg); } 100% { opacity: 0; {browser}transform-origin: 200% 500%; {browser}transform: scale(0, 0) rotate(270deg); }",
     openDownLeft: "0% { {browser}transform-origin: bottom left; {browser}transform: rotate(0deg); {browser}animation-timing-function: ease-out; } 100% { {browser}transform-origin: bottom left; {browser}transform: rotate(-110deg); {browser}animation-timing-function: ease-in-out;}",
     openDownRight: "0% { {browser}transform-origin: bottom right; {browser}transform: rotate(0deg); {browser}animation-timing-function: ease-out; } 100% { {browser}transform-origin: bottom right; {browser}transform: rotate(110deg); {browser}animation-timing-function: ease-in-out; }",

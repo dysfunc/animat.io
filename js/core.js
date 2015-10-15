@@ -507,6 +507,27 @@
         } : undefined;
       },
       /**
+       * Get the siblings of each element in a collection
+       * @param  {Object}      nodes   The collection of DOM nodes
+       * @param  {DOM Element} element Sibling to exclude from the collection (optional)
+       * @return {Array}               Collection of sibling elements
+       */
+      siblings: function(nodes, element){
+        var collection = [];
+
+        if(nodes == undefined){
+          return collection;
+        }
+
+        for(; nodes; nodes = nodes.nextSibling){
+          if(nodes.nodeType == 1 && nodes !== element){
+            collection.push(nodes);
+          }
+        }
+
+        return collection;
+      },
+      /**
        * Removes newlines, spaces (including non-breaking), and tabs from a text string
        * @param  {String} text The text string to trim
        * @return {String}      The modified string
@@ -646,8 +667,9 @@
         for(var i = 0, k = this.length; i < k; i++){
           element = this[i];
 
-          if(!element || element.nodeType === 3 || element.nodeType === 8 || !element.style)
+          if(!element || element.nodeType === 3 || element.nodeType === 8 || !element.style){
             return;
+          }
 
           if(isString){
             process(element, property, value);
@@ -711,8 +733,30 @@
         return this[0].classList.contains(cls);
       },
       /**
-       * Returns getBoundingClientRect object for the first matched element in a collection
-       * @return {Object} The offset object: height, left, top, width
+       * Returns the HTML contents of the first element in a matched set or updates the contents of one or more elements
+       * @param  {String} html The HTML string to replace the contents with
+       * @return {Mixed}       The contents of an individual element, or sets the contents for each element in the matched set
+       */
+      html: function(html){
+        if(!this.length || this[0] === undefined){
+          return undefined;
+        }
+
+        if(!html){
+          return this[0].innerHTML;
+        }
+
+        for(var i = 0, k = this.length; i < k; i++){
+          var element = this[i];
+
+          element.innerHTML = '' + html;
+        }
+
+        return this;
+      },
+      /**
+       * Returns the elements offset properties
+       * @return {Object} Object containing the offset definition
        */
       offset: function(){
 
@@ -723,11 +767,11 @@
         var element = this[0].getBoundingClientRect();
 
         return {
-          bottom: element.top + element.height + global.pageYOffset,
+          bottom: Math.round(element.top + element.height + global.pageYOffset),
           height: element.height,
-          left: element.left + global.pageXOffset,
-          right: element.left + element.width + global.pageXOffset,
-          top: element.top + global.pageYOffset,
+          left: Math.round(element.left + global.pageXOffset),
+          right: Math.round(element.left + element.width + global.pageXOffset),
+          top: Math.round(element.top + global.pageYOffset),
           width: element.width
         };
       },
@@ -785,6 +829,27 @@
         return this.chain(a(collection).filter(selector));
       },
       /**
+       * Returns the text from the first element in the matched set, or sets the
+       * text value for one or more elements
+       * @param  {String} text The text content to set
+       * @return {Mixed}       Gets or sets the text content of the element(s)
+       */
+      text: function(text){
+        if(!this.length){
+          return undefined;
+        }
+
+        if(!text){
+          return this[0].textContent;
+        }
+
+        for(var i = 0, k = this.length; i < k; i++){
+          this[i].textContent = text;
+        }
+
+        return this;
+      },
+      /**
        * Toggles a specific class on one or more elements
        * @param {Mixed} cls The CSS class to toggle or the function to execute
        */
@@ -832,6 +897,44 @@
       }
     });
 
+    /**
+     * Returns current width/height of an element or sets the height/width of one or more elements
+     * @param  {Mixed} value String or number to set as width/height
+     * @return {Mixed}       The current value or this
+     */
+    each(['width', 'height'], function(i, method){
+      a.fn[method] = function(value){
+        var element = this[0],
+            capitalize = method.charAt(0).toUpperCase() + method.slice(1);
+
+        if(!element){
+          return undefined;
+        }
+
+        if(a.isWindow(element)){
+          return element['inner' + capitalize];
+        }
+
+        if(element.nodeType === 9){
+          var doc = documentElement;
+
+          return Math.max(
+            element.body['scroll' + capitalize],
+            element.body['offset' + capitalize],
+            doc['scroll' + capitalize],
+            doc['offset' + capitalize],
+            doc['client' + capitalize]
+          );
+        }
+        // return the current value
+        if(value === undefined){
+          return parseFloat(this.css(method));
+        }
+        // set the value
+        return this.css(method, value);
+      }
+    });
+
     /*------------------------------------
      * RegExp patterns
      ------------------------------------*/
@@ -840,13 +943,13 @@
       browser       : /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i,
       camel         : /-([\da-z])/gi,
       cssNumbers    : /^((margin|padding|border)(top|right|bottom|left)(width|height)?|height|width|zindex?)$/i,
-      cssProperties : /^((background|margin|padding|border)(color|size|position|top|right|bottom|left)(width|height)?|opacity|color|height|transform|width?)$/i,
       device        : /\b((ip)(hone|ad|od)|playbook|hp-tablet)\b/i,
       duration      : /[\d\.]*m?s/,
       ios           : /\b((ip)(hone|ad|od))\b/i,
       escape        : /('|\\)/g,
       nodes         : /^(?:1|3|8|9|11)$/,
       numbers       : /^(0|[1-9][0-9]*)$/i,
+      parseCSS      : /[{:;}]/,
       prefixes      : /^-webkit-|-moz-|-o-|ms-/gi,
       properties    : /^(property|delay|duration)$/i,
       relative      : /^(?:(-|\+)(?:=))/,
@@ -861,7 +964,8 @@
       },
       transforms    : /^((perspective|rotate|scale|skew|translate)(X|Y|Z|3d)?|matrix(3d)?)$/i,
       trim          : /^\s+|\s+$/g,
-      whitespaces   : /^\s*$/g
+      whitespaces   : /^\s*$/g,
+      willChange    : /^((background|margin|padding|border)(color|size|position|top|right|bottom|left)(width|height)?|opacity|color|height|transform|width?)$/i
     };
 
     /*------------------------------------
@@ -983,9 +1087,7 @@
        */
       remove: function(element, event, fn){
         return (handlers[element.uid] || []).filter(function(handler){
-          return handler
-            && (!event || handler.type === event)
-            && (!fn    || handler.fn === fn)
+          return handler && (!event || handler.type === event) && (!fn || handler.fn === fn)
         });
       },
       /**

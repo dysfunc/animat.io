@@ -1,18 +1,21 @@
-(function(window, a){
-  // map of CSS properties during transform for reset
-  var reset = {};
+(function(window, animatio){
+  // map of CSS properties we need to reset
+  var reset = {},
+      // browser prefix
+      prefix = animatio.browser.cssPrefix;
+
   /**
    * Perform a custom animation of a set of CSS properties
    * @param  {Object}   config   The key + value pairs of properties to animate
    * @param  {Mixed}    duration The string or number in milliseconds or seconds
    * @param  {Function} fn       The callback method to execute on animation end (optional)
    */
-  a.fn.transform = function(config, duration, fn){
-    config = a.extend(true, {
-      duration: '500ms'
-    }, config, a(this).data());
+  animatio.fn.transform = function(config, duration, fn){
+    config = animatio.extend(true, {
+      duration: '500ms',
+    }, config, animatio(this).data());
 
-    if(a.isFunction(duration)){
+    if(animatio.isFunction(duration)){
       fn = duration;
       duration = config.duration;
     }
@@ -27,10 +30,10 @@
         duration = this.runtime(duration, '500ms'),
         delay = this.runtime(config.delay, '0s');
 
-    this.run(a(element), config, duration, delay, easing, fn);
+    this.run(animatio(element), config, duration, delay, easing, fn);
   };
 
-  a.extend(transform.prototype, {
+  animatio.extend(transform.prototype, {
     /**
      * Returns the duration for the animation effect
      * @param  {Mixed}  duration The number or string containing the duration of the animation
@@ -63,8 +66,7 @@
      * @return {Object} The object containing the reset transition properties
      */
     reset: function(){
-      var css = {},
-          prefix = a.browser.cssPrefix;
+      var css = {};
 
       ['delay', 'duration', 'property'].forEach(function(name, index){
         var property = reset[prefix + 'transition-' + name];
@@ -78,42 +80,48 @@
     },
     /**
      * Apply animation to one or more elements in a matched set
-     * @param  {Object}   element  The jQuery object
-     * @param  {[type]}   config   The key + value pairs of properties to animate
-     * @param  {[type]}   duration The duration of the animation (optional)
-     * @param  {[type]}   delay    The time to wait before executing the animation (optional)
-     * @param  {[type]}   easing   The animation timing function type (optional)
-     * @param  {Function} fn       The callback method to execute on animation end (optional)
+     * @param  {Object}   element  Animatio object
+     * @param  {Object}   config   Object containing key/value pairs of properties to animate
+     * @param  {Mixed}    duration String or number representing the duration (optional)
+     * @param  {Mixed}    delay    String or number representing the time to wait before executing the animation (optional)
+     * @param  {String}   easing   String containing the timing function type (optional)
+     * @param  {Function} fn       The callback function to execute after animation (optional)
      */
     run: function(element, config, duration, delay, easing, fn){
 
-      var $t = this,
+      var self = this,
           css = {},
           cssTransforms = [],
           cssTransitions = [],
+          willChange = [],
           timeout = this.wait(duration, delay),
           property, sleep, value,
-          prefix = a.browser.cssPrefix,
           map = { bottom: 'height', left: 'width', right: 'width', top: 'height' },
           transitionEnd = function(e){
+            // reset will-change properties
+            element[0].style.willChange = '';
             // unbind event
-            if(typeof(e) !== 'undefined' && e.target !== e.originalTarget){
+            if(e && e.target !== e.originalTarget){
               element.off('transitionend', transitionEnd);
             }
           };
 
-
       for(property in config){
         // check for valid property
-        if(!a.pattern.properties.test(property)){
-
+        if(!animatio.pattern.properties.test(property)){
           // if property is a transform property
-          if(a.pattern.transforms.test(property)){
+          if(animatio.pattern.transforms.test(property)){
             cssTransforms.push(property + '(' + config[property] + ')');
           }
           else{
+            if(animatio.pattern.willChange.test(property)){
+              // add property to will-change
+              if(willChange.indexOf(RegExp.$1) === -1){
+                willChange.push(RegExp.$1);
+              }
+            }
             // check for relative values
-            if((a.pattern.relative).test(config[property])){
+            if((animatio.pattern.relative).test(config[property])){
               var direction = RegExp.$1,
                   number = parseFloat(String(config[property]).replace(/\+|-|=/g, '')),
                   current = parseFloat(element.css(property)) || 0,
@@ -128,7 +136,6 @@
 
                 current = (parentValue - currentValue) * newPercentageValue;
               }
-
               // convert existing percentage width to pixels
               if(widthHeight && element.css(property).indexOf('%') !== -1){
                 current = Math.round(element.offset()[property]);
@@ -150,12 +157,14 @@
         }
       }
 
+      // set will-change properties on element
+      element[0].style.willChange = willChange.join(', ');
+      // build out transition
       css[prefix + 'transition-delay']           = delay;
       css[prefix + 'transition-duration']        = duration;
       css[prefix + 'transition-property']        = cssTransitions.join(' ');
       css[prefix + 'transition-timing-function'] = easing;
       css[prefix + 'transform']                  = 'translateZ(0) ' + cssTransforms.join(' ');
-
       // apply CSS and empty references
       element.css(css) && (css = null) && (cssTransforms = cssTransitions = []);
       // setup callback method after animationEnd
@@ -163,12 +172,12 @@
       // setup callback method after animationEnd
       sleep = setTimeout(function(){
         // reset CSS transitions
-        element.css($t.reset());
+        element.css(self.reset());
         // trigger callback function
         if(typeof(fn) === 'function'){
           fn.call(element[0]);
         }
-
+        // destroy timeout
         sleep && clearTimeout(sleep) && (sleep = null);
       }, timeout);
     }

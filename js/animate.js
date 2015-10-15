@@ -164,24 +164,22 @@
       }else{
         config = config || {};
         animation = this.rule(type, config);
-
+        // parse the css rule for properties
         var parse = animation.rule.split(animatio.pattern.parseCSS).filter(String).map(function(str){
-            return str.trim();
+          return str.trim().replace(animatio.pattern.prefixes, '')
         });
 
         animatio.each(parse, function(index, property){
-          // strip prefix from property
-          property = property.replace(animatio.pattern.prefixes, '');
           // check if property is a valid will-change property
-          if(animatio.pattern.cssProperties.test(property)){
-            // add property to will-change array for performance
+          if(animatio.pattern.willChange.test(property)){
+            // add property to will-change
             if(willChange.indexOf(RegExp.$1) === -1){
               willChange.push(RegExp.$1);
             }
           }
         });
         // set will-change properties on element
-        element[0].style.willChange = willChange.join(', ');
+        element.css('will-change', willChange.join(', '));
         // reset animation state for reuse
         if(type === prev){
           element.css(prefix + 'animation', 'none');
