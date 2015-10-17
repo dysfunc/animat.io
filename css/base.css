@@ -154,6 +154,12 @@ hr {
   position: relative;
 }
 
+.unstyled {
+  list-style-type: none;
+  margin: 20px 0;
+  padding: 0;
+}
+
 section {
   padding-top: 10px;
   position: relative;
@@ -209,9 +215,8 @@ section {
 #header h1 {
   color: #fff;
   font-size: 3em;
-  /*text-shadow: 0 3px 0 rgba(255,255,255,.5);*/
-  position: absolute;
   left: 0;
+  position: absolute;
   top: -15px;
 }
 
@@ -249,7 +254,7 @@ section {
   opacity: .15;
   text-shadow:
     1px 1px 0 #000,
-    2px 2px 0 #000, /* end of 2 level deep grey shadow */
+    2px 2px 0 #000,
     3px 3px 0 #000,
     4px 4px 0 #000,
     5px 5px 0 #000,
@@ -399,6 +404,11 @@ code {
 #notification {
   background: rgba(0,0,0,.4);
   border-radius: 3px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   font-size: 14px;
   opacity: 0;
   padding: 0;
@@ -406,11 +416,6 @@ code {
   right: 0;
   top: 0;
   width: 200px;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
 }
 
 #notification .picture,
