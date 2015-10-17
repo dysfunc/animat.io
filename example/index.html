@@ -492,20 +492,71 @@
           <div class="row">
             <div class="col-md-12">
               <div class="transform-container">
-                <div id="animate_me">
+                <div id="animate">
                   <div></div>
                   <div></div>
                   <div></div>
                   <div></div>
                 </div>
-                <div id="notification">OMG! Awesome</div>
+                <div id="notification">
+                  <div class="picture"><img src="images/ron_burgundy.png"></div>
+                  <div class="message">You stay classy San Diego.</div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
-              <button id="animate_box" class="btn">Click for magic</button>
+              <h5>Transform + Animation - Live editor</h5>
+              <textarea id="transform-code">
+$('#animate').animate('flipInX', function(){
+  $(this)
+    .animate('swing')
+    .transform({
+      left: '20%',
+      top: 60,
+      opacity: 1,
+      width: 500,
+      height: 200
+    }, 1000, function(){
+
+      $(this)
+        .animate('flipInX')
+        .transform({
+          left: '-=100',
+          top: '+=60',
+          opacity: 1,
+          width: '+=500',
+          height: 200
+        }, 1000, function(){
+
+          $(this)
+            .animate('swing')
+            .transform({
+              left: '50%',
+              top: '50%',
+              opacity: 1,
+              width: 50,
+              height: 50
+            }, 1000);
+        });
+    });
+});
+
+              </textarea>
+              <button id="animate_box" class="btn uppercase bold mt20">Run Code</button>
             </div>
             <div class="col-md-6">
-              <button id="growl" class="btn">OSX Notification</button>
+              <h5>Notification - Live editor</h5>
+              <textarea id="notification-code">
+$('#notification').animate('fadeInUpBig', '750ms', function(){
+  this.style.opacity = 1;
+
+  $(this).animate('fadeOutUpBig', {
+    delay: 750,
+    duration: 750
+  });
+});
+              </textarea>
+              <button id="growl" class="btn uppercase bold mt20">Run Code</button>
             </div>
 
           </div>
