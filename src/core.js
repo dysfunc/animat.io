@@ -41,7 +41,6 @@
       filter = arrayPrototype.filter,
       hasOwn = objectPrototype.hasOwnProperty,
       slice = arrayPrototype.slice,
-      splice = arrayPrototype.splice,
       indexOf = arrayPrototype.indexOf,
       trim = stringPrototype.trim,
       uid = 1,
@@ -597,8 +596,6 @@
     a.fn.init.prototype = a.fn;
 
     a.apply(a.fn, {
-      concat: concat,
-      indexOf: indexOf,
       each: a.each,
       /**
        * Creates a reference to the original matched collection for chain breaking (e.g. using .end())
@@ -745,6 +742,14 @@
         }
 
         return this.chain(search);
+      },
+      /**
+       * Retrieve the DOM element at the specified index
+       * @param  {Number} index  A zero-based index indicating which element to retrieve
+       * @return {Mixed}         DOM element at the specified index or the entire collection
+       */
+      get: function(index){
+        return index !== undefined ? (index < 0 ? this[this.length + index] : this[index]) : slice.call(this);
       },
       /**
        * Determines whether an element has a specific CSS class

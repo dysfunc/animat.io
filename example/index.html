@@ -10,12 +10,12 @@
   </head>
   <body>
 
-    <header id="header">
+    <header id="header" data-gumshoe-header>
       <div class="container">
         <h1>animat.<span class="alt">io</span></h1>
-        <ul class="pull-right" id="nav">
-          <li class="active">
-            <a href="#getting-started">
+        <ul class="pull-right" id="nav" data-gumshoe>
+          <li>
+            <a href="#getting-started" class="active">
               Getting Started
             </a>
           </li>
@@ -29,7 +29,6 @@
         </div>
       </div>
     </header>
-
     <div id="content">
       <section id="splash-wrapper">
         <div id="splash">
@@ -136,6 +135,20 @@
 
           <div class="row mt40">
             <div class="col-md-4">
+              <h5>Bomb</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="bombLeftOut">bombLeftOut</button>
+                  <button class="btn block" data-effect="boingInUp">boingInUp</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="bombRightOut">bombRightOut</button>
+                  <button class="btn block" data-effect="boingOutDown">boingOutDown</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
               <h5>Bounce</h5>
               <div class="auto-margin html-badge"></div>
               <div class="col-md-12">
@@ -175,6 +188,8 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row mt40">
             <div class="col-md-4">
               <h5>Fade Out</h5>
               <div class="auto-margin html-badge"></div>
@@ -193,24 +208,42 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row mt40">
             <div class="col-md-4">
-              <h5>Flip</h5>
+              <h5>Magic</h5>
               <div class="auto-margin html-badge"></div>
-              <div class="row">
+              <div class="row-fluid">
                 <div class="col-md-6">
-                  <button class="btn block" data-effect="flipIn">flipIn</button>
-                  <button class="btn block" data-effect="flipInX">flipInX</button>
-                  <button class="btn block" data-effect="flipInY">flipInY</button>
+                  <button class="btn block" data-effect="swap">swap</button>
+                  <button class="btn block" data-effect="twisterInDown">twisterInDown</button>
+                  <button class="btn block" data-effect="vanishIn">vanishIn</button>
+                  <button class="btn block" data-effect="puffIn">puffIn</button>
                 </div>
                 <div class="col-md-6">
-                  <button class="btn block" data-effect="flipOut">flipOut</button>
-                  <button class="btn block" data-effect="flipOutX">flipOutX</button>
-                  <button class="btn block" data-effect="flipOutY">flipOutY</button>
+                  <button class="btn block" data-effect="magic">magic</button>
+                  <button class="btn block" data-effect="twisterInUp">twisterInUp</button>
+                  <button class="btn block" data-effect="vanishOut">vanishOut</button>
+                  <button class="btn block" data-effect="puffOut">puffOut</button>
                 </div>
               </div>
             </div>
+            <div class="col-md-4">
+              <h5>Math</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="swashIn">swashIn</button>
+                  <button class="btn block" data-effect="foolishIn">foolishIn</button>
+                  <button class="btn block" data-effect="holeIn">holeIn</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="swashOut">swashOut</button>
+                  <button class="btn block" data-effect="foolishOut">foolishOut</button>
+                  <button class="btn block" data-effect="holeOut">holeOut</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt40">
             <div class="col-md-4">
               <h5>Miscellaneous</h5>
               <div class="auto-margin html-badge"></div>
@@ -235,74 +268,6 @@
               </div>
             </div>
             <div class="col-md-4">
-              <h5>Rotate</h5>
-              <div class="auto-margin html-badge"></div>
-              <div class="row">
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="rotateIn">rotateIn</button>
-                  <button class="btn block" data-effect="rotateInUpLeft">rotateInUpLeft</button>
-                  <button class="btn block" data-effect="rotateInDownLeft">rotateInDownLeft</button>
-                  <button class="btn block" data-effect="rotateInUpRight">rotateInUpRight</button>
-                  <button class="btn block" data-effect="rotateInDownRight">rotateInDownRight</button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="rotateOut">rotateOut</button>
-                  <button class="btn block" data-effect="rotateOutUpLeft">rotateOutUpLeft</button>
-                  <button class="btn block" data-effect="rotateOutDownLeft">rotateOutDownLeft</button>
-                  <button class="btn block" data-effect="rotateOutUpRight">rotateOutUpRight</button>
-                  <button class="btn block" data-effect="rotateOutDownRight">rotateOutDownRight</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt40">
-            <div class="col-md-4">
-              <h5>Slide</h5>
-              <div class="auto-margin html-badge"></div>
-              <div class="row">
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="slideInLeft">slideInLeft</button>
-                  <button class="btn block" data-effect="slideInRight">slideInRight</button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="slideOutLeft">slideOutLeft</button>
-                  <button class="btn block" data-effect="slideOutRight">slideOutRight</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h5>Zoom</h5>
-              <div class="auto-margin html-badge"></div>
-              <div class="row-fluid">
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="zoomIn">zoomIn</button>
-                  <button class="btn block" data-effect="zoomInCurved">zoomInCurved</button>
-                  <button class="btn block" data-effect="zoomInFlip">zoomInFlip</button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="zoomOut">zoomOut</button>
-                  <button class="btn block" data-effect="zoomOutCurved">zoomOutCurved</button>
-                  <button class="btn block" data-effect="zoomOutFlip">zoomOutFlip</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h5>Perspective</h5>
-              <div class="auto-margin html-badge"></div>
-              <div class="row-fluid">
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="perspectiveDown">perspectiveDown</button>
-                  <button class="btn block" data-effect="perspectiveLeft">perspectiveLeft</button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn block" data-effect="perspectiveUp">perspectiveUp</button>
-                  <button class="btn block" data-effect="perspectiveRight">perspectiveRight</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt40">
-            <div class="col-md-4">
               <h5>Open</h5>
               <div class="auto-margin html-badge"></div>
               <div class="row-fluid">
@@ -324,6 +289,121 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-4">
+              <h5>Perspective</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="perspectiveDown">perspectiveDown</button>
+                  <button class="btn block" data-effect="perspectiveLeft">perspectiveLeft</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="perspectiveUp">perspectiveUp</button>
+                  <button class="btn block" data-effect="perspectiveRight">perspectiveRight</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt40">
+            <div class="col-md-4">
+              <h5>Rotate</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="rotateLeft">rotateLeft</button>
+                  <button class="btn block" data-effect="rotateUp">rotateUp</button>
+                  <button class="btn block" data-effect="rotateIn">rotateIn</button>
+                  <button class="btn block" data-effect="rotateInUpLeft">rotateInUpLeft</button>
+                  <button class="btn block" data-effect="rotateInDownLeft">rotateInDownLeft</button>
+                  <button class="btn block" data-effect="rotateInUpRight">rotateInUpRight</button>
+                  <button class="btn block" data-effect="rotateInDownRight">rotateInDownRight</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="rotateRight">rotateRight</button>
+                  <button class="btn block" data-effect="rotateDown">rotateDown</button>
+                  <button class="btn block" data-effect="rotateOut">rotateOut</button>
+                  <button class="btn block" data-effect="rotateOutUpLeft">rotateOutUpLeft</button>
+                  <button class="btn block" data-effect="rotateOutDownLeft">rotateOutDownLeft</button>
+                  <button class="btn block" data-effect="rotateOutUpRight">rotateOutUpRight</button>
+                  <button class="btn block" data-effect="rotateOutDownRight">rotateOutDownRight</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Slide</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="slideLeft">slideLeft</button>
+                  <button class="btn block" data-effect="slideUp">slideUp</button>
+                  <button class="btn block" data-effect="slideLeftRetourn">slideLeftRetourn</button>
+                  <button class="btn block" data-effect="slideUpRetourn">slideUpRetourn</button>
+                  <button class="btn block" data-effect="slideInLeft">slideInLeft</button>
+                  <button class="btn block" data-effect="slideInRight">slideInRight</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="slideRight">slideRight</button>
+                  <button class="btn block" data-effect="slideDown">slideDown</button>
+                  <button class="btn block" data-effect="slideRightRetourn">slideRightRetourn</button>
+                  <button class="btn block" data-effect="slideDownRetourn">slideDownRetourn</button>
+                  <button class="btn block" data-effect="slideOutLeft">slideOutLeft</button>
+                  <button class="btn block" data-effect="slideOutRight">slideOutRight</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Space</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="spaceOutUp">spaceOutUp</button>
+                  <button class="btn block" data-effect="spaceOutRight">spaceOutRight</button>
+                  <button class="btn block" data-effect="spaceOutLeft">spaceOutLeft</button>
+                  <button class="btn block" data-effect="spaceOutDown">spaceOutDown</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="spaceInUp">spaceInUp</button>
+                  <button class="btn block" data-effect="spaceInRight">spaceInRight</button>
+                  <button class="btn block" data-effect="spaceInLeft">spaceInLeft</button>
+                  <button class="btn block" data-effect="spaceInDown">spaceInDown</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt40">
+            <div class="col-md-4">
+              <h5>Tin</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="tinRightIn">tinRightIn</button>
+                  <button class="btn block" data-effect="tinLeftIn">tinLeftIn</button>
+                  <button class="btn block" data-effect="tinUpIn">tinUpIn</button>
+                  <button class="btn block" data-effect="tinDownIn">tinDownIn</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="tinRightOut">tinRightOut</button>
+                  <button class="btn block" data-effect="tinLeftOut">tinLeftOut</button>
+                  <button class="btn block" data-effect="tinUpOut">tinUpOut</button>
+                  <button class="btn block" data-effect="tinDownOut">tinDownOut</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Zoom</h5>
+              <div class="auto-margin html-badge"></div>
+              <div class="row-fluid">
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="zoomIn">zoomIn</button>
+                  <button class="btn block" data-effect="zoomInCurved">zoomInCurved</button>
+                  <button class="btn block" data-effect="zoomInFlip">zoomInFlip</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn block" data-effect="zoomOut">zoomOut</button>
+                  <button class="btn block" data-effect="zoomOutCurved">zoomOutCurved</button>
+                  <button class="btn block" data-effect="zoomOutFlip">zoomOutFlip</button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -356,10 +436,17 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="js/animatio.min.js"></script>
+    <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/animations.js"></script>
+    <script type="text/javascript" src="js/animate.js"></script>
+    <script type="text/javascript" src="js/transform.js"></script>
+    <script type="text/javascript" src="js/gumshoe.js"></script>
 
     <script type="text/javascript">
       animatio(function(){
+
+        gumshoe.init();
+
         var buttons = animatio('.btn').each(function(){
           this.addEventListener('click', function(){
 
