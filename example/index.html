@@ -42,6 +42,15 @@
       <div class="container">
         <section id="getting-started">
           <h2>Getting Started</h2>
+          <div class="row mb40">
+            <div class="col-md-12">
+              <h5>Animatio Query Language</h5>
+              <p>If you've used jQuery then you already know how to use animatio. We originally designed animatio as plugin for jQuery, which is still available, but decided to create a framework agnostic animation library that followed a common pattern that everyone is familiar with. With the rise of the SPA frameworks like Angular, React, Ember, etc... and isomorphic apps we wanted to appeal to a larger audience that could drop us in for animations without all the additional overhead.</p>
+
+              <p>If jQuery is running <code>$</code> will reference animatio. <code>$('#element') => animation('#element')</code></p>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-md-6">
               <h5>Usage</h5>
@@ -52,7 +61,7 @@
             </div>
             <div class="col-md-6">
               <pre class="prettyprint linenums lang-js js">
-&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animation.animatio(selector).animate('fadeIn');&#x000A;&#x000A;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('fadeIn');&#x000A;&#x000A;&lt;/script&gt;
               </pre>
             </div>
           </div>
@@ -441,68 +450,6 @@
     <script type="text/javascript" src="js/animate.js"></script>
     <script type="text/javascript" src="js/transform.js"></script>
     <script type="text/javascript" src="js/gumshoe.js"></script>
-
-    <script type="text/javascript">
-      animatio(function(){
-
-        gumshoe.init();
-
-        var buttons = animatio('.btn').each(function(){
-          this.addEventListener('click', function(){
-
-            var img = animatio(this.parentNode.parentNode.parentNode.querySelector('.html-badge')),
-                animation = animatio(this).data('effect');
-
-            img.animate(animation, function(){
-              animatio(this).animate('reset');
-            });
-          });
-        });
-
-        $('#growl').on('click', function(){
-          $('#notification').animate('fadeInUpBig', { duration: 750 }, function(){
-            this.style.opacity = 1;
-
-            $(this).animate('fadeOutUpBig', {
-              delay: 750,
-              duration: 750
-            });
-          });
-        });
-
-        $('#animate_box').on('click',  function(){
-          $('#animate_me').animate('lightSpeedIn', function(){
-            $(this).animate('lightSpeedOut', function(){
-              $(this).animate('flipInX', function(){
-                //not relative
-                $(this)
-                  .animate('swing')
-                  .transform({ left: '20%', top: 60, opacity: 1, width: 500, height: 200 }, 1000, function(){
-                  //relative string
-                  $(this).animate('flipInX').transform({ left: '-=100', top: '+=60', opacity: 1, width: '+=500', height: 200 }, 1000, function(){
-                    //relative stringify
-                    $(this).animate('swing').transform({ left: '-=' + 100, top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 200 }, 1000, function(){
-                      $(this).transform({ left: '50%', top: '+=' + 60, borderRadius: '4px', width: '-=' + 800, height: 80}, 1000, function(){
-                        $(this).animate('flipOutX', function(){
-                          $(this).animate('flipInY', function(){
-                            $(this).transform({ left: '-=100', top: '+=' + 60, opacity: 1, width: '+=' + 500, height: 500 }, 1000, function(){
-                              $(this).transform({ left: '50', borderRadius: '2px', top: 40, width: '50%', height: 100}, 1500, function(){
-                                $(this).transform({ left: '50%', top: '50%', width: 50, height: 50, borderRadius: 0, opacity: 1 }, 1500);
-                              });
-                            });
-                          });
-                        });
-
-                        $(this).transform({ borderRadius: 0, width: 50, height: 50 }, 1000);
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-    </script>
+    <script type="text/javascript" src="js/demo.js"></script>
   </body>
 </html>
