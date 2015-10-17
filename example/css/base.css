@@ -3,7 +3,7 @@ body {
   background-attachment: fixed;
   color: #fff;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   margin: 0;
   padding: 0;
@@ -44,6 +44,7 @@ span.ext {
 
 h5 {
   color: rgba(0,0,0,.3);
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0em;
   text-transform: uppercase;
@@ -139,7 +140,7 @@ section {
 }
 
 #header {
-  background-color: rgba(0,0,0, .2);
+  background-color: #2e2e36;
   border-bottom: 1px solid rgba(255,255,255,.1);
   position: fixed;
   top: 0;
@@ -180,7 +181,7 @@ section {
 }
 
 #header ul li a.active {
-  background-color: rgba(232,94,94, .5);
+  background-color: rgba(235,118,118, .35);
   color: #fff;
   text-shadow: 0 1px 0 rgba(0,0,0, 0);
 }
@@ -289,15 +290,16 @@ section {
 }
 
 pre {
-  background-color: rgba(255,255,255, .1);
+  background: linear-gradient(180deg, rgba(0,0,0,.1) 10%, rgba(0,0,0,.15) 90%);
   border: 0;
-  color: rgba(255,255,255,.5);
+  color: rgba(255,255,255,.4);
 }
 
 code {
   background-color: rgba(0,0,0, .1);
   color: #fff;
   display: inline-block;
+  font-size: 13px;
   padding: 0 3px;
 }
 
@@ -377,6 +379,7 @@ code {
 #notification {
   background: rgba(0,0,0,.4);
   border-radius: 3px;
+  font-size: 14px;
   opacity: 0;
   padding: 20px;
   position: absolute;
@@ -384,4 +387,17 @@ code {
   text-align: center;
   top: 0;
   width: 150px;
+}
+
+small {
+  color: rgba(255,255,255, .75);
+  font-size: 13px;
+}
+
+.col-md-4 .row-fluid .col-md-6:first-child {
+  padding-left: 0;
+}
+
+.col-md-4 .row-fluid .col-md-6:last-child {
+  padding-right: 0;
 }
