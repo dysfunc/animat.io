@@ -29,7 +29,8 @@
         </div>
       </div>
     </header>
-    <div id="content">
+
+    <div id="content" data-gumshoe-content>
       <section id="splash-wrapper">
         <div id="splash">
           <h1>animat.<span class="alt">io</span></h1>
@@ -45,9 +46,9 @@
           <div class="row mb40">
             <div class="col-md-12">
               <h5>Animatio Query Language</h5>
-              <p>If you've used jQuery then you already know how to use animatio. We originally designed animatio as plugin for jQuery, which is still available, but decided to create a framework agnostic animation library that followed a common pattern that everyone is familiar with. With the rise of the SPA frameworks like Angular, React, Ember, etc... and isomorphic apps we wanted to appeal to a larger audience that could drop us in for animations without all the additional overhead.</p>
+              <p>If you've used jQuery then you already know how to use animatio. We originally designed animatio as plugin for jQuery, but decided to create a framework agnostic animation library that followed a common pattern that everyone is familiar with. With the rise of the SPA frameworks like Angular, React, Ember, etc... and isomorphic apps we wanted to appeal to a larger audience that could drop us in for animations/transitions without all the additional overhead.</p>
 
-              <p>If jQuery is running <code>$</code> will reference animatio. <code>$('#element') => animatio('#element')</code></p>
+              <p>If jQuery is <u>NOT</u> included on the page <code>$</code> will reference animatio. <code>$('#element')</code> would be the same as <code>animatio('#element')</code></p>
             </div>
           </div>
 
@@ -55,13 +56,15 @@
             <div class="col-md-6">
               <h5>Usage</h5>
               <p>
-                You can apply any animation by just by calling <code>.animation</code> method
+                You can apply any animation by just by calling <code>.animate</code> method
                 and defining the animation type to any element.
               </p>
             </div>
             <div class="col-md-6">
+              <h5>&nbsp;</h5>
               <pre class="prettyprint linenums lang-js js">
-&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('fadeIn');&#x000A;&#x000A;&lt;/script&gt;
+
+  $(selector).animate('fadeIn');
               </pre>
             </div>
           </div>
@@ -90,11 +93,17 @@
                 </li>
               </ul>
 
-              You can read more about each configurable property here - <a href="http://www.w3.org/TR/css3-animations/#timing-functions">Official W3C Document</a>.
+              You find a list of configurable properties here - <a href="http://www.w3.org/TR/css3-animations/#timing-functions" target="_blank">Official W3C Document</a>.
             </div>
             <div class="col-md-6">
+              <h5>&nbsp;</h5>
               <pre class="prettyprint linenums">
-&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('pulse', {&#x000A;    delay: '1s',&#x000A;    duration: '2s',&#x000A;    iterationCount: 'infinite'&#x000A;  });&#x000A;&#x000A;&lt;/script&gt;
+
+  $(selector).animate('pulse', {
+    delay: '1s',
+    duration: '2s',
+    iterationCount: 'infinite'
+  });
               </pre>
             </div>
           </div>
@@ -106,8 +115,12 @@
               </p>
             </div>
             <div class="col-md-6">
+              <h5>&nbsp;</h5>
               <pre class="prettyprint linenums">
-&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('fadeIn', function(){&#x000A;    animatio(this).animate('fadeOut');&#x000A;  });&#x000A;&#x000A;&lt;/script&gt;
+
+  $(selector).animate('fadeIn', function(){
+    $(this).animate('fadeOut');
+  });
               </pre>
             </div>
           </div>
@@ -115,7 +128,7 @@
             <div class="col-md-6">
               <h5>Customize</h5>
               <p>
-                There are predefined animations that are ready to use (listed <a href='#effects'>below</a>).
+                There are predefined animations that are ready to use.
                 However, you can also create your own animation by setting it as a string in
                 <code>config.rule</code>.
               </p>
@@ -127,8 +140,14 @@
               </p>
             </div>
             <div class="col-md-6">
+              <h5>&nbsp;</h5>
               <pre class="prettyprint linenums">
-&lt;script type="text/javascript"&gt;&#x000A;&#x000A;  animatio(selector).animate('moveLeft', {&#x000A;    rule: "0% { {browser}transform: translateX(0);}, 100% { {browser}transform: translateX(100);}"&#x000A;  });&#x000A;&#x000A;&lt;/script&gt;
+  var rule = "0%   { {browser}transform: translateX(0);    }," +
+             "100% { {browser}transform: translateX(100%); } ";
+
+  $(selector).animate('moveLeft', {
+    rule: rule
+  });
               </pre>
             </div>
           </div>
@@ -140,7 +159,7 @@
           <h2>Using Animations</h2>
 
           <h5 class="mt40">Predefined Animations</h5>
-          <p>Below you'll find effect that can be used out-of-the-box.</p>
+          <p>Below you'll find animations that are provided out-of-the-box. This set of baked-in goodies is a combination off Dan Eden's <a href="https://daneden.github.io/animate.css/" target="_blank">Animate.css</a>, Christian's (aka miniMac) <a href="http://minimamente.com/example/magic_animations/" target="_blank">Magic</a> and our own set of effects.</p>
 
           <div class="row mt40">
             <div class="col-md-4">
@@ -417,29 +436,79 @@
           </div>
         </section>
 
+        <hr class="mt40">
         <section id="transforms">
-          <div class="container">
-            <hr>
-            <div class="transform-container">
-              <div id="animate_me">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <h2>Transforms</h2>
-            <div class="row">
-              <div class="col-md-6">
-                <button id="animate_box" class="btn">Click for magic</button>
-              </div>
-              <div class="col-md-6">
-                <button id="growl" class="btn">OSX Notification</button>
-              </div>
-
+          <h2 class="mb30">Using Transforms</h2>
+          <div class="row mb40">
+            <div class="col-md-12">
+              <p>Transforms provide you with the ability to control all aspects of the element, transitional and supported tranform properties. This can be powerful when used in combination with animations.</p>
             </div>
           </div>
-          <div id="notification">OMG! Awesome</div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Usage</h5>
+              <p>
+                You can easily transform any element by simply defining the properties you would like to animate. <br>
+                <small>Unit properties can take relative values -= or +=.</small>
+              </p>
+            </div>
+            <div class="col-md-6">
+              <h5>&nbsp;</h5>
+              <pre class="prettyprint linenums lang-js js">
+
+  $(selector).transform({
+    height: 200,
+    left: '-=100',
+    opacity: 1,
+    top: '+=' + 60,
+    width: '+=500',
+  });
+              </pre>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Callbacks</h5>
+              <p>
+                You can add an optional second parameter to define a callback function that will be executed when the transformation ends.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <h5>&nbsp;</h5>
+              <pre class="prettyprint linenums lang-js js">
+
+  $(selector).transform({
+    left: '50%',
+    top: '50%'
+  }, '1s', function(){
+    $(this).transform({ width: 500 }, '1s');
+  });
+              </pre>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="transform-container">
+                <div id="animate_me">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div id="notification">OMG! Awesome</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <button id="animate_box" class="btn">Click for magic</button>
+            </div>
+            <div class="col-md-6">
+              <button id="growl" class="btn">OSX Notification</button>
+            </div>
+
+          </div>
         </section>
         <br><br><br><br><br><br>
       </div>
