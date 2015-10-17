@@ -31,6 +31,18 @@ a {
   color: rgba(0,0,0,.4);
 }
 
+textarea {
+  background: linear-gradient(180deg, rgba(0,0,0,.1) 10%, rgba(0,0,0,.15) 90%);
+  border: 0;
+  border-radius: 4px;
+  color: rgba(255,255,255,.4);
+  font-family: "Consolas";
+  font-size: 14px;
+  padding: 20px;
+  height: 240px;
+  width: 100%;
+}
+
 a:hover {
   color: rgba(0,0,0,.5);
 }
@@ -84,6 +96,14 @@ hr {
 
 .heading {
   color: #6f5a40;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .inline {
@@ -330,7 +350,7 @@ code {
   position: relative;
 }
 
-#animate_me {
+#animate {
   border: 1px solid rgba(210,255,0, .5);
   height: 50px;
   position: absolute;
@@ -344,7 +364,7 @@ code {
   -webkit-transform: translate3d(0, 0, 0);
 }
 
-#animate_me > div {
+#animate > div {
   background: transparent;
   border: 1px solid rgba(210,255,0, .5);
   border-radius: 100%;
@@ -355,21 +375,21 @@ code {
   width: 8px;
 }
 
-#animate_me > div:nth-child(2){
+#animate > div:nth-child(2){
   bottom: auto;
   left: auto;
   right: -4px;
   top: -4px;
 }
 
-#animate_me > div:nth-child(3){
+#animate > div:nth-child(3){
   bottom: -4px;
   left: -4px;
   right: auto;
   top: auto;
 }
 
-#animate_me > div:nth-child(4){
+#animate > div:nth-child(4){
   left: auto;
   bottom: -4px;
   right: -4px;
@@ -381,12 +401,37 @@ code {
   border-radius: 3px;
   font-size: 14px;
   opacity: 0;
-  padding: 20px;
+  padding: 0;
   position: absolute;
-  right: 20px;
-  text-align: center;
+  right: 0;
   top: 0;
-  width: 150px;
+  width: 200px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+#notification .picture,
+#notification .message {
+  display: inline-block;
+}
+
+#notification .picture {
+  padding: 5px;
+  width: 50px;
+}
+
+#notification .picture img {
+  background-size: 50px 50px;
+  height: 50px;
+  width: 50px;
+}
+
+#notification .message {
+  font-size: 14px;
+  padding: 10px;
 }
 
 small {
