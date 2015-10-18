@@ -1,4 +1,7 @@
 node_modules
 .DS_Store
-example/js
+example/js/animate.js
+example/js/animations.js
+example/js/core.js
+example/js/transform.js
 .grunt
