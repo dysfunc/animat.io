@@ -3,8 +3,8 @@ $(function(){
   gumshoe.init();
 
   $('#splash').find('h1').animate('vanishIn', function(){
-    $('#splash').find('h2').animate('flipInY', function(){
-      $('#download-now').transform({ opacity: 1 }).animate('tada');
+    $('#splash').find('h2').animate('boingInUp', function(){
+      $('#download-now').animate('lightSpeedIn');
     });
   });
 
