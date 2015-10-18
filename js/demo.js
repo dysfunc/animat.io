@@ -2,6 +2,16 @@ $(function(){
 
   gumshoe.init();
 
+  $('#splash').find('h1').animate('vanishIn', function(){
+    $('#splash').find('h2').animate('flipInY', function(){
+      $('#download-now').transform({ opacity: 1 }).animate('tada');
+    });
+  });
+
+  $('#download-now').click(function(){
+    window.location.href = "http://github.com/dysfunc/animat.io/zipball/master/"
+  });
+
   var buttons = $('.btn').each(function(){
     $(this).on('click', function(){
 
