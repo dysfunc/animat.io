@@ -26,6 +26,40 @@
             <a href="#transforms">Using Transforms</a>
           </li>
         </ul>
+        <div class="links">
+          <div class="inline">
+            <iframe
+              allowtransparency="true"
+              frameborder="0"
+              height="20"
+              scrolling="0"
+              src="http://ghbtns.com/github-btn.html?user=dysfunc&amp;repo=animat.io&amp;type=fork&amp;count=true"
+              width="80">
+            </iframe>
+          </div>
+          <div class="inline">
+            <iframe
+              allowtransparency="true"
+              frameborder="0"
+              height="20"
+              scrolling="0"
+              src="http://ghbtns.com/github-btn.html?user=dysfunc&amp;repo=animat.io&amp;type=watch&amp;count=true"
+              width="80">
+            </iframe>
+          </div>
+          <div class="inline">
+            <div
+              class="fb-like"
+              data-href="https://dysfunc.github.io/animat.io"
+              data-layout="button_count"
+              data-action="like"
+              data-show-faces="false"
+              data-share="false">
+            </div>
+          </div>
+          <div class="inline plusone">
+            <g:plusone id="gplus" href="https://dysfunc.github.io/animat.io"></g:plusone>
+          </div>
         </div>
       </div>
     </header>
@@ -35,6 +69,9 @@
         <div id="splash">
           <h1>animat.<span class="alt">io</span></h1>
           <h2>A Modern CSS Animations / Effects Library</h2>
+          <div id="download">
+            <div class="btn btn-large" id="download-now">Download Now</div>
+          </div>
         </div>
       </section>
 
@@ -565,11 +602,39 @@ $('#notification').animate('fadeInUpBig', '750ms', function(){
       </div>
     </div>
 
+    <iframe id="download-it" style="display: none;"></iframe>
+
     <script type="text/javascript" src="js/core.js"></script>
     <script type="text/javascript" src="js/animations.js"></script>
     <script type="text/javascript" src="js/animate.js"></script>
     <script type="text/javascript" src="js/transform.js"></script>
     <script type="text/javascript" src="js/gumshoe.js"></script>
     <script type="text/javascript" src="js/demo.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-39797343-5', 'auto');
+      ga('send', 'pageview');
+
+      (function(){
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
   </body>
 </html>

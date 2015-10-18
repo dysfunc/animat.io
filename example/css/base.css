@@ -92,6 +92,7 @@ hr {
 
 .btn-large {
   font-family: "Arvo";
+  font-size: 20px;
 }
 
 .heading {
@@ -176,7 +177,7 @@ section {
 
 #header ul {
   list-style: none;
-  margin: 10px 0;
+  margin: 10px -10px 10px 0;
   padding: 0;
 }
 
@@ -187,6 +188,10 @@ section {
   padding: 5px;
   vertical-align: middle;
   zoom: 1;
+}
+
+#header ul li:last-child {
+  padding-right: 0;
 }
 
 #header ul li a {
@@ -217,7 +222,7 @@ section {
   font-size: 3em;
   left: 0;
   position: absolute;
-  top: -15px;
+  top: -16px;
 }
 
 #header h1 span.ext {
@@ -245,6 +250,7 @@ section {
 #splash h1 {
   color: #fff;
   font-size: 110px;
+  opacity: 0;
   margin-bottom: 20px;
 }
 
@@ -267,27 +273,37 @@ section {
 #splash h2 {
   color: rgba(255,255,255, .8);
   font-size: 1.8em;
+  opacity: 0;
   text-align: center;
 }
 
+#splash #download-now {
+  opacity: 0;
+}
+
 .links {
-  margin: 10px auto 0;
+  margin: 20px auto 0;
   position: absolute;
   right: -20px;
   text-align: right;
   top: 60px;
-  width: 400px;
   z-index: 99;
 }
 
 .links .fb-like {
+  display: block;
   margin-left: -4px;
-  margin-top: -5px;
+  margin-top: -2px;
   margin-right: 5px;
 }
 
+.links .plusone > div {
+  display: block;
+  margin-top: -2px !important;
+}
+
 .links .inline {
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 #download {
