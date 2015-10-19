@@ -27,12 +27,12 @@ $(function(){
   $('#growl').on('click', function(){
     var code = $('#notification-code').val();
 
-    return eval(code)(1);
+    return (1, eval)(code);
   });
 
   $('#animate_box').on('click',  function(){
     var code = $('#transform-code').val();
 
-    return eval(code)(1);
+    return (1, eval)(code);
   });
 });

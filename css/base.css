@@ -32,8 +32,8 @@ a {
 }
 
 textarea {
-  background: linear-gradient(180deg, rgba(0,0,0,.1) 10%, rgba(0,0,0,.15) 90%);
-  border: 0;
+  background: transparent; /* linear-gradient(180deg, rgba(0,0,0,.1) 10%, rgba(0,0,0,.15) 90%); */
+  border: 1px solid rgba(0,0,0,.1);
   border-radius: 4px;
   color: rgba(255,255,255,.4);
   font-family: "Consolas";
@@ -41,6 +41,16 @@ textarea {
   padding: 20px;
   height: 240px;
   width: 100%;
+}
+
+textarea:focus,
+textarea:active {
+  border: 1px solid rgba(0,0,0,.25);
+  outline: 0;
+}
+
+.no-bg {
+  background: transparent;
 }
 
 a:hover {
