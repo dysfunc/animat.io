@@ -6,7 +6,7 @@
     "Kieran Boyle <norcal.kieran@gmail.com>",
     "Sergio Almecija Rodriguez <sheniff@gmail.com>"
   ],
-  "description": "A Modern CSS Animations and Effects Library",
+  "description": "A Modern CSS Animation Library",
   "main": "dist/animatio.min.js",
   "moduleType": [
     "globals"
