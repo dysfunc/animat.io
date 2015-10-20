@@ -1,4 +1,4 @@
-Copyright 201-2015 Kieran Boyle and Sergio Almecija
+Copyright 2013-2015 Kieran Boyle and Sergio Almecija
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
