@@ -96,8 +96,8 @@
         this.context = context;
 
         if(selector === 'body' || selector === document.body){
-          this.selector = '';
           this[this.length++] = this.context = document.body;
+
           return this;
         }
 
@@ -124,13 +124,13 @@
           return this;
         }
 
-        if(!this.context && this.context !== document){
-          context = this.context = document;
+        if(!context){
+          this.context = document;
         }else{
-          context = a(this.context)[0];
+          this.context = a(context)[0];
         }
 
-        return a.merge(this, a.query(selector, context));
+        return a.merge(this, a.query(selector, this.context));
       }
     };
 
@@ -1145,7 +1145,7 @@
         }
 
         return (handlers[element.uid]).filter(function(handler){
-          return handler && (!event || handler.type === event) && (!fn || handler.fn === fn)
+          return handler && (!event || handler.type === event) && (!fn || handler.fn === fn);
         });
       },
       /**
