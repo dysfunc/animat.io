@@ -1,7 +1,7 @@
 {
-  "name": "animat.io",
+  "name": "animatio",
   "description": "A Modern CSS Animation Library",
-  "namespace": "animat.io",
+  "namespace": "animatio",
   "version": "2.0.0",
   "private": true,
   "main": "dist/animatio.js",
