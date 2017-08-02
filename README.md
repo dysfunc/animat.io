@@ -2,6 +2,8 @@
 [animat.io](https://dysfunc.github.io/animat.io/) - A Modern CSS Animations Library
 ==================================================
 
+THIS REPO IS NO LONGER BEING MAINTAINED
+
 Developed by [@dysfunc](http://github.com/dysfunc/) and [@sheniff](http://github.com/sheniff)
 
 Shout-outs
