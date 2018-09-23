@@ -6,6 +6,8 @@ THIS REPO IS NO LONGER BEING MAINTAINED
 
 Developed by [@dysfunc](http://github.com/dysfunc/) and [@sheniff](http://github.com/sheniff)
 
+The original jQuery plugin can be [found here](https://github.com/brochachos/animatio) - [demo](http://animatio.herokuapp.com/)
+
 Shout-outs
 --------------------------------------
 
